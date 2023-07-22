@@ -12,5 +12,8 @@
     "requestAnimationFrame"
   ],
   "author": "kostix.dev",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "git-conventional-commits": "^2.6.5"
+  }
 }
