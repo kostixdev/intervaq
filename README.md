@@ -118,6 +118,7 @@ testTimeout in 5500ms #0 at 1689877236288
 # Dev:
 
   - `npm install`
+  - configure your gitflow workspace like it is [here][gitflow-url]
 
 
 
@@ -144,3 +145,4 @@ testTimeout in 5500ms #0 at 1689877236288
 [kostix-url]: https://kostix.dev
 [threejs-url]: https://threejs.org
 [requestAnimationFrame-url]: https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+[gitflow-url]: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
