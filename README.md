@@ -12,6 +12,10 @@ Working well in a project that based on [three.js][threejs-url] library.
 
 
 
+## Documentation:
+Check documentation [here][docs-url]
+
+
 ## Some info to use:
   - `intervaq`:
     - `.checkToExecute()` in `requestAnimationFrame` callback body;
@@ -131,6 +135,7 @@ testTimeout in 5500ms #0 at 1689877236288
   - [ ] mk some tests
   - [ ] mk some cleanup... maybe...
   - [ ] modify some `checkToExecute` functionality
+  - [ ] chck `clearInterval` on `executionInProcess`
   - [ ] try to keep pausing at its `Intervaq` class only
   - [ ] do smth with `destroy` method
   - [ ] transfer to typescript... maybe...
@@ -146,3 +151,4 @@ testTimeout in 5500ms #0 at 1689877236288
 [threejs-url]: https://threejs.org
 [requestAnimationFrame-url]: https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
 [gitflow-url]: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
+[docs-url]: docs/README.md

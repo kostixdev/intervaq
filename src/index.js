@@ -1,32 +1,60 @@
-
+/**
+ * Returns Int datetime.
+ * @returns {number} - int datetime
+ */
 function getCurrentTime() {
   return (performance || Date).now();
 }
 
-
-
 const STATUS_INTERVAQ_PAUSED = 0;
 const STATUS_INTERVAQ_IN_PROCESS = 1;
 
+/**
+ * @module Intervaq
+ * @example
+ * const intervaq = new Intervaq();
+ */
+
+
+
+/**
+ * Main Intervaq class
+ */
 class Intervaq {
+  /**
+   * Array of Intervals
+   */
   intervals = [];
+  /**
+   * Array of Timeouts
+   */
   timeouts = [];
-
+  /**
+   * Status value
+   */
   status = STATUS_INTERVAQ_IN_PROCESS;
+  /**
+   * null or datetime when Intervaq is paused
+   */
   pausedAt = null;
-
+  /**
+   * Constructor (empty)
+   */
   constructor() {
-    // nothing to do here
   }
 
+
+
+  /**
+   * setInterval functionality.
+   *
+   * @param .....
+   */
   setInterval(fnToExecute, timeInterval) {
     const interval = new Interval(fnToExecute, timeInterval);
     this.intervals.push(interval);
     return interval;
   }
-
-  // @TODO: chck clearInterval on executionInProcess
-  // @TODO: test for memory
 
   clearInterval(interval) {
     const index = this.intervals.indexOf(interval);
@@ -98,6 +126,9 @@ const STATUS_INTERVAL_PAUSED = 0;
 const STATUS_INTERVAL_IN_PROCESS = 1;
 const STATUS_INTERVAL_DISABLED = 3;
 
+/**
+ * Interval item class
+ */
 class Interval {
   prevTime = null;
   callback = () => null;
@@ -175,6 +206,9 @@ const STATUS_TIMEOUT_IN_PROCESS = 1;
 const STATUS_TIMEOUT_DONE = 2;
 const STATUS_TIMEOUT_DISABLED = 3;
 
+/**
+ * Timeout item class
+ */
 class Timeout {
   prevTime = null;
   callback = () => null;
