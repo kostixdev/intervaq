@@ -104,7 +104,7 @@ class Intervaq {
     const index = this.timeouts.indexOf(timeout);
     if (index !== -1) {
       timeout.destroy();
-       this.timeouts.splice(index, 1);
+      this.timeouts.splice(index, 1);
       return true;
     }
     return false;

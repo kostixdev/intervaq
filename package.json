@@ -6,9 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:check": "eslint ./src/*",
-    "lint:fix": "eslint --fix  ./src/*",
+    "lint:fix": "eslint --fix ./src/*",
     "build:docs": "node node_modules/.bin/jsdoc2md --heading-depth 1 ./src/index.js > ./docs/README.md",
-    "pre-commit": "npm run lint:fix && npm run build:docs && git add ./docs/*"
+    "pre-commit": "npm run lint:fix && npm run build:docs && git add ./docs/*",
+    "prepare": "husky install"
   },
   "keywords": [
     "setInterval",
@@ -21,6 +22,7 @@
     "eslint": "^8.45.0",
     "eslint-config-google": "^0.14.0",
     "git-conventional-commits": "^2.6.5",
+    "husky": "^8.0.3",
     "jsdoc-to-markdown": "^8.0.0"
   }
 }
