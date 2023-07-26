@@ -4,12 +4,11 @@
   "description": "Just another one solution for intervals and timeouts via requestAnimationFrame",
   "main": "src/index.js",
   "scripts": {
+    "prepare": "husky install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:check": "eslint ./src/*",
     "lint:fix": "eslint --fix ./src/*",
-    "build:docs": "node node_modules/.bin/jsdoc2md --heading-depth 1 ./src/index.js > ./docs/README.md",
-    "pre-commit": "npm run lint:fix && npm run build:docs && git add ./docs/*",
-    "prepare": "husky install"
+    "build:docs": "node node_modules/.bin/jsdoc2md --heading-depth 1 ./src/index.js > ./docs/README.md"
   },
   "keywords": [
     "setInterval",
