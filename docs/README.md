@@ -30,42 +30,42 @@ const intervaq = new Intervaq();
         * [.pausedAt](#module_Intervaq..Intervaq+pausedAt) : <code>null</code> \| <code>number</code>
         * [.setInterval(fnToExecute, timeInterval)](#module_Intervaq..Intervaq+setInterval) ⇒ <code>Interval</code>
         * [.clearInterval(interval)](#module_Intervaq..Intervaq+clearInterval) ⇒ <code>boolean</code>
-        * [.setTimeout(fnToExecute, timeInterval)](#module_Intervaq..Intervaq+setTimeout) ⇒ <code>Timeout</code>
+        * [.setTimeout(fnToExecute, timeOut)](#module_Intervaq..Intervaq+setTimeout) ⇒ <code>Timeout</code>
         * [.clearTimeout(timeout)](#module_Intervaq..Intervaq+clearTimeout) ⇒ <code>boolean</code>
         * [.checkToExecute()](#module_Intervaq..Intervaq+checkToExecute)
         * [.pauseProcessing()](#module_Intervaq..Intervaq+pauseProcessing)
         * [.continueProcessing()](#module_Intervaq..Intervaq+continueProcessing)
     * [~Interval](#module_Intervaq..Interval)
         * [new Interval(callback, timeInterval)](#new_module_Intervaq..Interval_new)
-        * [.prevTime](#module_Intervaq..Interval+prevTime) : <code>null</code> \| <code>number</code>
+        * [.prevTime](#module_Intervaq..Interval+prevTime) : <code>number</code>
         * [.callback](#module_Intervaq..Interval+callback) : <code>function</code>
-        * [.timeInterval](#module_Intervaq..Interval+timeInterval) : <code>null</code> \| <code>number</code>
-        * [.executeAtTime](#module_Intervaq..Interval+executeAtTime) : <code>null</code> \| <code>number</code>
+        * [.timeInterval](#module_Intervaq..Interval+timeInterval) : <code>number</code>
+        * [.executeAtTime](#module_Intervaq..Interval+executeAtTime) : <code>number</code>
         * [.status](#module_Intervaq..Interval+status) : <code>StatusInterval</code>
         * [.pausedAtTime](#module_Intervaq..Interval+pausedAtTime) : <code>null</code> \| <code>number</code>
         * [.checkTimeToExecute(timeToCheck)](#module_Intervaq..Interval+checkTimeToExecute)
         * [.execute()](#module_Intervaq..Interval+execute)
         * [.pauseExecuting(pausedAtTime)](#module_Intervaq..Interval+pauseExecuting)
         * [.continueExecuting(continueAtTime)](#module_Intervaq..Interval+continueExecuting)
-        * [.disable()](#module_Intervaq..Interval+disable)
-        * [.enable()](#module_Intervaq..Interval+enable)
-        * [.restart()](#module_Intervaq..Interval+restart)
+        * [.disable()](#module_Intervaq..Interval+disable) ⇒ <code>Interval</code>
+        * [.enable()](#module_Intervaq..Interval+enable) ⇒ <code>Interval</code>
+        * [.restart()](#module_Intervaq..Interval+restart) ⇒ <code>Interval</code>
         * [.destroy()](#module_Intervaq..Interval+destroy)
     * [~Timeout](#module_Intervaq..Timeout)
         * [new Timeout(callback, timeOut)](#new_module_Intervaq..Timeout_new)
         * [.prevTime](#module_Intervaq..Timeout+prevTime) : <code>null</code> \| <code>number</code>
         * [.callback](#module_Intervaq..Timeout+callback) : <code>function</code>
-        * [.timeOut](#module_Intervaq..Timeout+timeOut) : <code>null</code> \| <code>number</code>
-        * [.executeAtTime](#module_Intervaq..Timeout+executeAtTime) : <code>null</code> \| <code>number</code>
+        * [.timeOut](#module_Intervaq..Timeout+timeOut) : <code>number</code>
+        * [.executeAtTime](#module_Intervaq..Timeout+executeAtTime) : <code>number</code>
         * [.status](#module_Intervaq..Timeout+status) : <code>StatusTimeout</code>
         * [.pausedAtTime](#module_Intervaq..Timeout+pausedAtTime) : <code>null</code> \| <code>number</code>
         * [.checkTimeToExecute(timeToCheck)](#module_Intervaq..Timeout+checkTimeToExecute) ⇒ <code>boolean</code>
-        * [.execute()](#module_Intervaq..Timeout+execute)
+        * [.execute()](#module_Intervaq..Timeout+execute) ⇒ <code>boolean</code>
         * [.pauseExecuting(pausedAtTime)](#module_Intervaq..Timeout+pauseExecuting)
         * [.continueExecuting(continueAtTime)](#module_Intervaq..Timeout+continueExecuting)
-        * [.disable()](#module_Intervaq..Timeout+disable)
-        * [.enable()](#module_Intervaq..Timeout+enable)
-        * [.restart()](#module_Intervaq..Timeout+restart)
+        * [.disable()](#module_Intervaq..Timeout+disable) ⇒ <code>Timeout</code>
+        * [.enable()](#module_Intervaq..Timeout+enable) ⇒ <code>Timeout</code>
+        * [.restart()](#module_Intervaq..Timeout+restart) ⇒ <code>Timeout</code>
         * [.destroy()](#module_Intervaq..Timeout+destroy)
     * [~StatusIntervaq](#module_Intervaq..StatusIntervaq) : <code>enum</code>
     * [~StatusInterval](#module_Intervaq..StatusInterval) : <code>enum</code>
@@ -86,7 +86,7 @@ Main Intervaq class
     * [.pausedAt](#module_Intervaq..Intervaq+pausedAt) : <code>null</code> \| <code>number</code>
     * [.setInterval(fnToExecute, timeInterval)](#module_Intervaq..Intervaq+setInterval) ⇒ <code>Interval</code>
     * [.clearInterval(interval)](#module_Intervaq..Intervaq+clearInterval) ⇒ <code>boolean</code>
-    * [.setTimeout(fnToExecute, timeInterval)](#module_Intervaq..Intervaq+setTimeout) ⇒ <code>Timeout</code>
+    * [.setTimeout(fnToExecute, timeOut)](#module_Intervaq..Intervaq+setTimeout) ⇒ <code>Timeout</code>
     * [.clearTimeout(timeout)](#module_Intervaq..Intervaq+clearTimeout) ⇒ <code>boolean</code>
     * [.checkToExecute()](#module_Intervaq..Intervaq+checkToExecute)
     * [.pauseProcessing()](#module_Intervaq..Intervaq+pauseProcessing)
@@ -95,7 +95,7 @@ Main Intervaq class
 <a name="new_module_Intervaq..Intervaq_new"></a>
 
 ### new Intervaq()
-Constructor (empty)
+Constructor
 
 <a name="module_Intervaq..Intervaq+intervals"></a>
 
@@ -140,7 +140,7 @@ setInterval functionality.
 clearInterval functionality.
 
 **Kind**: instance method of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
-**Returns**: <code>boolean</code> - - done status  
+**Returns**: <code>boolean</code> - - done state  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -148,7 +148,7 @@ clearInterval functionality.
 
 <a name="module_Intervaq..Intervaq+setTimeout"></a>
 
-### intervaq.setTimeout(fnToExecute, timeInterval) ⇒ <code>Timeout</code>
+### intervaq.setTimeout(fnToExecute, timeOut) ⇒ <code>Timeout</code>
 setTimeout functionality.
 
 **Kind**: instance method of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
@@ -157,7 +157,7 @@ setTimeout functionality.
 | Param | Type | Description |
 | --- | --- | --- |
 | fnToExecute | <code>callback</code> | function to execute |
-| timeInterval | <code>number</code> | time of execution in Ms |
+| timeOut | <code>number</code> | time of execution in Ms |
 
 <a name="module_Intervaq..Intervaq+clearTimeout"></a>
 
@@ -165,7 +165,7 @@ setTimeout functionality.
 clearTimeout functionality.
 
 **Kind**: instance method of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
-**Returns**: <code>boolean</code> - - done status  
+**Returns**: <code>boolean</code> - - done state  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -198,19 +198,19 @@ Interval item class
 
 * [~Interval](#module_Intervaq..Interval)
     * [new Interval(callback, timeInterval)](#new_module_Intervaq..Interval_new)
-    * [.prevTime](#module_Intervaq..Interval+prevTime) : <code>null</code> \| <code>number</code>
+    * [.prevTime](#module_Intervaq..Interval+prevTime) : <code>number</code>
     * [.callback](#module_Intervaq..Interval+callback) : <code>function</code>
-    * [.timeInterval](#module_Intervaq..Interval+timeInterval) : <code>null</code> \| <code>number</code>
-    * [.executeAtTime](#module_Intervaq..Interval+executeAtTime) : <code>null</code> \| <code>number</code>
+    * [.timeInterval](#module_Intervaq..Interval+timeInterval) : <code>number</code>
+    * [.executeAtTime](#module_Intervaq..Interval+executeAtTime) : <code>number</code>
     * [.status](#module_Intervaq..Interval+status) : <code>StatusInterval</code>
     * [.pausedAtTime](#module_Intervaq..Interval+pausedAtTime) : <code>null</code> \| <code>number</code>
     * [.checkTimeToExecute(timeToCheck)](#module_Intervaq..Interval+checkTimeToExecute)
     * [.execute()](#module_Intervaq..Interval+execute)
     * [.pauseExecuting(pausedAtTime)](#module_Intervaq..Interval+pauseExecuting)
     * [.continueExecuting(continueAtTime)](#module_Intervaq..Interval+continueExecuting)
-    * [.disable()](#module_Intervaq..Interval+disable)
-    * [.enable()](#module_Intervaq..Interval+enable)
-    * [.restart()](#module_Intervaq..Interval+restart)
+    * [.disable()](#module_Intervaq..Interval+disable) ⇒ <code>Interval</code>
+    * [.enable()](#module_Intervaq..Interval+enable) ⇒ <code>Interval</code>
+    * [.restart()](#module_Intervaq..Interval+restart) ⇒ <code>Interval</code>
     * [.destroy()](#module_Intervaq..Interval+destroy)
 
 <a name="new_module_Intervaq..Interval_new"></a>
@@ -226,8 +226,8 @@ Constructor.
 
 <a name="module_Intervaq..Interval+prevTime"></a>
 
-### interval.prevTime : <code>null</code> \| <code>number</code>
-null (initial) or Int datetime of its prev execution iteration.
+### interval.prevTime : <code>number</code>
+Int datetime of its prev execution iteration.
 
 **Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
 <a name="module_Intervaq..Interval+callback"></a>
@@ -238,14 +238,14 @@ null (initial) or Int datetime of its prev execution iteration.
 **Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
 <a name="module_Intervaq..Interval+timeInterval"></a>
 
-### interval.timeInterval : <code>null</code> \| <code>number</code>
-null (initial) or Int time in Ms of its interval execution.
+### interval.timeInterval : <code>number</code>
+Int time in Ms of its interval execution.
 
 **Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
 <a name="module_Intervaq..Interval+executeAtTime"></a>
 
-### interval.executeAtTime : <code>null</code> \| <code>number</code>
-null (initial) or Int datetime of next execution iteration.
+### interval.executeAtTime : <code>number</code>
+Int datetime of next execution iteration.
 
 **Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
 <a name="module_Intervaq..Interval+status"></a>
@@ -269,7 +269,7 @@ Check its Interval for execution.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| timeToCheck | <code>number</code> | Int datetime to check for next execution iteration. |
+| timeToCheck | <code>number</code> | Int datetime to check for execution. |
 
 <a name="module_Intervaq..Interval+execute"></a>
 
@@ -297,26 +297,29 @@ Continue to execute after pause.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| continueAtTime | <code>number</code> | Int datetime to calculate downtime for the next execution iteration. |
+| continueAtTime | <code>number</code> | Int datetime to calculate its downtime. |
 
 <a name="module_Intervaq..Interval+disable"></a>
 
-### interval.disable()
+### interval.disable() ⇒ <code>Interval</code>
 Disable execution.
 
 **Kind**: instance method of [<code>Interval</code>](#module_Intervaq..Interval)  
+**Returns**: <code>Interval</code> - this.  
 <a name="module_Intervaq..Interval+enable"></a>
 
-### interval.enable()
+### interval.enable() ⇒ <code>Interval</code>
 Enable execution.
 
 **Kind**: instance method of [<code>Interval</code>](#module_Intervaq..Interval)  
+**Returns**: <code>Interval</code> - this.  
 <a name="module_Intervaq..Interval+restart"></a>
 
-### interval.restart()
+### interval.restart() ⇒ <code>Interval</code>
 Restart execution.
 
 **Kind**: instance method of [<code>Interval</code>](#module_Intervaq..Interval)  
+**Returns**: <code>Interval</code> - this.  
 <a name="module_Intervaq..Interval+destroy"></a>
 
 ### interval.destroy()
@@ -334,17 +337,17 @@ Timeout item class
     * [new Timeout(callback, timeOut)](#new_module_Intervaq..Timeout_new)
     * [.prevTime](#module_Intervaq..Timeout+prevTime) : <code>null</code> \| <code>number</code>
     * [.callback](#module_Intervaq..Timeout+callback) : <code>function</code>
-    * [.timeOut](#module_Intervaq..Timeout+timeOut) : <code>null</code> \| <code>number</code>
-    * [.executeAtTime](#module_Intervaq..Timeout+executeAtTime) : <code>null</code> \| <code>number</code>
+    * [.timeOut](#module_Intervaq..Timeout+timeOut) : <code>number</code>
+    * [.executeAtTime](#module_Intervaq..Timeout+executeAtTime) : <code>number</code>
     * [.status](#module_Intervaq..Timeout+status) : <code>StatusTimeout</code>
     * [.pausedAtTime](#module_Intervaq..Timeout+pausedAtTime) : <code>null</code> \| <code>number</code>
     * [.checkTimeToExecute(timeToCheck)](#module_Intervaq..Timeout+checkTimeToExecute) ⇒ <code>boolean</code>
-    * [.execute()](#module_Intervaq..Timeout+execute)
+    * [.execute()](#module_Intervaq..Timeout+execute) ⇒ <code>boolean</code>
     * [.pauseExecuting(pausedAtTime)](#module_Intervaq..Timeout+pauseExecuting)
     * [.continueExecuting(continueAtTime)](#module_Intervaq..Timeout+continueExecuting)
-    * [.disable()](#module_Intervaq..Timeout+disable)
-    * [.enable()](#module_Intervaq..Timeout+enable)
-    * [.restart()](#module_Intervaq..Timeout+restart)
+    * [.disable()](#module_Intervaq..Timeout+disable) ⇒ <code>Timeout</code>
+    * [.enable()](#module_Intervaq..Timeout+enable) ⇒ <code>Timeout</code>
+    * [.restart()](#module_Intervaq..Timeout+restart) ⇒ <code>Timeout</code>
     * [.destroy()](#module_Intervaq..Timeout+destroy)
 
 <a name="new_module_Intervaq..Timeout_new"></a>
@@ -355,8 +358,8 @@ Constructor
 
 | Param | Type | Description |
 | --- | --- | --- |
-| callback | <code>callback</code> | Int datetime to check for next execution iteration. |
-| timeOut | <code>number</code> | Int datetime to check for next execution iteration. |
+| callback | <code>callback</code> | Function to execute. |
+| timeOut | <code>number</code> | Int datetime to check for execution. |
 
 <a name="module_Intervaq..Timeout+prevTime"></a>
 
@@ -372,14 +375,14 @@ null (initial) or Int datetime of its prev execution iteration.
 **Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
 <a name="module_Intervaq..Timeout+timeOut"></a>
 
-### timeout.timeOut : <code>null</code> \| <code>number</code>
-null (initial) or Int time in Ms of its timeout execution.
+### timeout.timeOut : <code>number</code>
+Int time in Ms of its timeout execution.
 
 **Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
 <a name="module_Intervaq..Timeout+executeAtTime"></a>
 
-### timeout.executeAtTime : <code>null</code> \| <code>number</code>
-null (initial) or Int datetime of next execution iteration.
+### timeout.executeAtTime : <code>number</code>
+Int datetime of next execution iteration.
 
 **Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
 <a name="module_Intervaq..Timeout+status"></a>
@@ -400,7 +403,7 @@ null or Int datetime when current interval is paused.
 Check its Timeout for execution.
 
 **Kind**: instance method of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-**Returns**: <code>boolean</code> - done status.  
+**Returns**: <code>boolean</code> - done state.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -408,10 +411,11 @@ Check its Timeout for execution.
 
 <a name="module_Intervaq..Timeout+execute"></a>
 
-### timeout.execute()
+### timeout.execute() ⇒ <code>boolean</code>
 Execute the `callback` function.
 
 **Kind**: instance method of [<code>Timeout</code>](#module_Intervaq..Timeout)  
+**Returns**: <code>boolean</code> - done state.  
 <a name="module_Intervaq..Timeout+pauseExecuting"></a>
 
 ### timeout.pauseExecuting(pausedAtTime)
@@ -432,26 +436,29 @@ Continue to execute after pause.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| continueAtTime | <code>number</code> | Int datetime to calculate downtime for the timeout iteration. |
+| continueAtTime | <code>number</code> | Int datetime to calculate its downtime. |
 
 <a name="module_Intervaq..Timeout+disable"></a>
 
-### timeout.disable()
+### timeout.disable() ⇒ <code>Timeout</code>
 Disable execution.
 
 **Kind**: instance method of [<code>Timeout</code>](#module_Intervaq..Timeout)  
+**Returns**: <code>Timeout</code> - this.  
 <a name="module_Intervaq..Timeout+enable"></a>
 
-### timeout.enable()
+### timeout.enable() ⇒ <code>Timeout</code>
 Enable execution.
 
 **Kind**: instance method of [<code>Timeout</code>](#module_Intervaq..Timeout)  
+**Returns**: <code>Timeout</code> - this.  
 <a name="module_Intervaq..Timeout+restart"></a>
 
-### timeout.restart()
+### timeout.restart() ⇒ <code>Timeout</code>
 Restart execution.
 
 **Kind**: instance method of [<code>Timeout</code>](#module_Intervaq..Timeout)  
+**Returns**: <code>Timeout</code> - this.  
 <a name="module_Intervaq..Timeout+destroy"></a>
 
 ### timeout.destroy()

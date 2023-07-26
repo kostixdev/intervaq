@@ -130,7 +130,6 @@ testTimeout in 5500ms #0 at 1689877236288
 
   - [ ] apply some pattern... maybe...
   - [ ] mk some prettify
-  - [ ] mk some lint
   - [ ] mk some tests
   - [ ] mk some cleanup... maybe...
   - [ ] modify some `checkToExecute` functionality
