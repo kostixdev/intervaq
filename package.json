@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:docs": "node node_modules/.bin/jsdoc2md --heading-depth 1 ./src/index.js > ./docs/README.md",
-    "pre-commit": "npm run build:docs"
+    "pre-commit": "npm run build:docs && git add ./docs/*"
   },
   "keywords": [
     "setInterval",
