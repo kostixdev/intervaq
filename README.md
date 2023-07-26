@@ -123,6 +123,7 @@ testTimeout in 5500ms #0 at 1689877236288
 
   - `npm install`
   - configure your gitflow workspace like it is [here][gitflow-url]
+  - `npm run prepare` (check [husky][husky-url] documentation)
 
 
 
@@ -130,7 +131,6 @@ testTimeout in 5500ms #0 at 1689877236288
 
   - [ ] apply some pattern... maybe...
   - [ ] mk some prettify
-  - [ ] mk some lint
   - [ ] mk some tests
   - [ ] mk some cleanup... maybe...
   - [ ] modify some `checkToExecute` functionality
@@ -151,3 +151,4 @@ testTimeout in 5500ms #0 at 1689877236288
 [requestAnimationFrame-url]: https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
 [gitflow-url]: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
 [docs-url]: docs/README.md
+[husky-url]: https://typicode.github.io/husky/

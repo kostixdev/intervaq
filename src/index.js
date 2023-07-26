@@ -1,11 +1,10 @@
 /**
  * Returns Int datetime.
- * @returns {number} - int datetime
+ * @return {number} - int datetime
  */
 function getCurrentTime() {
   return (performance || Date).now();
 }
-
 
 
 /**
@@ -15,16 +14,15 @@ function getCurrentTime() {
  */
 
 
-
 /**
  * Status of Intervaq
  * @enum {number}
  */
 const StatusIntervaq = {
   /** paused */
-  PAUSED : 0,
+  PAUSED: 0,
   /** in process */
-  IN_PROCESS : 1
+  IN_PROCESS: 1,
 };
 
 /**
@@ -32,42 +30,37 @@ const StatusIntervaq = {
  */
 class Intervaq {
   /**
-   * Array of Intervals
-   * @type {Interval[]}
-   */
-  intervals = [];
-  /**
-   * Array of Timeouts
-   * @type {Timeout[]}
-   */
-  timeouts = [];
-  /**
-   * Status value
-   * @type {StatusIntervaq}
-   */
-  status = StatusIntervaq.IN_PROCESS;
-  /**
-   * null or Int datetime when Intervaq is paused
-   * @type {(null|number)}
-   */
-  pausedAt = null;
-
-
-  
-  /**
-   * Constructor (empty)
+   * Constructor
    */
   constructor() {
-
+    /**
+     * Array of Intervals
+     * @type {Interval[]}
+     */
+    this.intervals = [];
+    /**
+     * Array of Timeouts
+     * @type {Timeout[]}
+     */
+    this.timeouts = [];
+    /**
+     * Status value
+     * @type {StatusIntervaq}
+     */
+    this.status = StatusIntervaq.IN_PROCESS;
+    /**
+     * null or Int datetime when Intervaq is paused
+     * @type {(null|number)}
+     */
+    this.pausedAt = null;
   }
-
 
 
   /**
    * setInterval functionality.
    * @param {callback} fnToExecute - function to execute
    * @param {number} timeInterval - time of execution in Ms
-   * @returns {Interval} - object of Interval
+   * @return {Interval} - object of Interval
    */
   setInterval(fnToExecute, timeInterval) {
     const interval = new Interval(fnToExecute, timeInterval);
@@ -78,7 +71,7 @@ class Intervaq {
   /**
    * clearInterval functionality.
    * @param {Interval} interval - object of Interval
-   * @returns {boolean} - done status
+   * @return {boolean} - done state
    */
   clearInterval(interval) {
     const index = this.intervals.indexOf(interval);
@@ -93,8 +86,8 @@ class Intervaq {
   /**
    * setTimeout functionality.
    * @param {callback} fnToExecute - function to execute
-   * @param {number} timeInterval - time of execution in Ms
-   * @returns {Timeout} - object of Timeout
+   * @param {number} timeOut - time of execution in Ms
+   * @return {Timeout} - object of Timeout
    */
   setTimeout(fnToExecute, timeOut) {
     const timeout = new Timeout(fnToExecute, timeOut);
@@ -105,7 +98,7 @@ class Intervaq {
   /**
    * clearTimeout functionality.
    * @param {Timeout} timeout - object of Timeout
-   * @returns {boolean} - done status
+   * @return {boolean} - done state
    */
   clearTimeout(timeout) {
     const index = this.timeouts.indexOf(timeout);
@@ -145,9 +138,11 @@ class Intervaq {
     this.status = StatusIntervaq.PAUSED;
     this.pausedAt = getCurrentTime();
     // - intervals pause
-    this.intervals.forEach( interval => interval.pauseExecuting(this.pausedAt) );
+    this.intervals.forEach(
+        (interval) => interval.pauseExecuting(this.pausedAt)
+    );
     // - timeouts pause
-    this.timeouts.forEach( timeout => timeout.pauseExecuting(this.pausedAt) );
+    this.timeouts.forEach( (timeout) => timeout.pauseExecuting(this.pausedAt) );
   }
 
   /**
@@ -158,12 +153,11 @@ class Intervaq {
     this.pausedAt = null;
     const runAt = getCurrentTime();
     // - intervals run
-    this.intervals.forEach( interval => interval.continueExecuting(runAt) );
+    this.intervals.forEach( (interval) => interval.continueExecuting(runAt) );
     // - timeouts run
-    this.timeouts.forEach( timeout => timeout.continueExecuting(runAt) );
+    this.timeouts.forEach( (timeout) => timeout.continueExecuting(runAt) );
   }
 }
-
 
 
 /**
@@ -172,11 +166,11 @@ class Intervaq {
  */
 const StatusInterval = {
   /** paused */
-  PAUSED : 0,
+  PAUSED: 0,
   /** in process */
-  IN_PROCESS : 1,
+  IN_PROCESS: 1,
   /** disabled for execution */
-  DISABLED : 2
+  DISABLED: 2,
 };
 
 /**
@@ -184,53 +178,48 @@ const StatusInterval = {
  */
 class Interval {
   /**
-   * null (initial) or Int datetime of its prev execution iteration.
-   * @type {(null|number)}
-   */
-  prevTime = null;
-  /**
-   * `callback` function to execute.
-   * @type {function} 
-   */
-  callback = () => null;
-  /**
-   * null (initial) or Int time in Ms of its interval execution.
-   * @type {(null|number)} 
-   */
-  timeInterval = null;
-
-  /**
-   * null (initial) or Int datetime of next execution iteration.
-   * @type {(null|number)} 
-   */
-  executeAtTime = null;
-
-  /**
-   * Status value.
-   * @type { StatusInterval }
-   */
-  status = StatusInterval.IN_PROCESS;
-  /**
-   * null or Int datetime when current interval is paused.
-   * @type {(null|number)}
-   */
-  pausedAtTime = null;
-
-  /**
    * Constructor.
    * @param {callback} callback - function to execute
    * @param {number} timeInterval - time of execution in Ms
    */
   constructor(callback, timeInterval) {
+    /**
+     * Int datetime of its prev execution iteration.
+     * @type {number}
+     */
     this.prevTime = getCurrentTime();
+    /**
+     * `callback` function to execute.
+     * @type {function}
+     */
     this.callback = callback;
+    /**
+     * Int time in Ms of its interval execution.
+     * @type {number}
+     */
     this.timeInterval = timeInterval;
+
+    /**
+     * Int datetime of next execution iteration.
+     * @type {number}
+     */
     this.executeAtTime = this.prevTime + timeInterval;
+
+    /**
+     * Status value.
+     * @type { StatusInterval }
+     */
+    this.status = StatusInterval.IN_PROCESS;
+    /**
+     * null or Int datetime when current interval is paused.
+     * @type {(null|number)}
+     */
+    this.pausedAtTime = null;
   }
 
   /**
    * Check its Interval for execution.
-   * @param {number} timeToCheck - Int datetime to check for next execution iteration.
+   * @param {number} timeToCheck - Int datetime to check for execution.
    */
   checkTimeToExecute(timeToCheck) {
     if (this.status !== StatusInterval.IN_PROCESS) {
@@ -261,7 +250,7 @@ class Interval {
 
   /**
    * Continue to execute after pause.
-   * @param {number} continueAtTime - Int datetime to calculate downtime for the next execution iteration.
+   * @param {number} continueAtTime - Int datetime to calculate its downtime.
    */
   continueExecuting(continueAtTime) {
     this.executeAtTime += continueAtTime - this.pausedAtTime;
@@ -271,6 +260,7 @@ class Interval {
 
   /**
    * Disable execution.
+   * @return {Interval} this.
    */
   disable() {
     this.status = StatusInterval.DISABLED;
@@ -279,6 +269,7 @@ class Interval {
 
   /**
    * Enable execution.
+   * @return {Interval} this.
    */
   enable() {
     this.prevTime = getCurrentTime();
@@ -289,11 +280,10 @@ class Interval {
 
   /**
    * Restart execution.
+   * @return {Interval} this.
    */
   restart() {
-    this.disable();
-    this.enable();
-    return this;
+    return this.disable().enable();
   }
 
   /**
@@ -309,22 +299,20 @@ class Interval {
 }
 
 
-
 /**
  * Status of Timeout
  * @enum {number}
  */
 const StatusTimeout = {
   /** paused */
-  PAUSED : 0,
+  PAUSED: 0,
   /** in process */
-  IN_PROCESS : 1,
+  IN_PROCESS: 1,
   /** execution done */
-  DONE : 2,
+  DONE: 2,
   /** disabled for execution */
-  DISABLED : 3
+  DISABLED: 3,
 };
-
 
 
 /**
@@ -332,56 +320,49 @@ const StatusTimeout = {
  */
 class Timeout {
   /**
-   * null (initial) or Int datetime of its prev execution iteration.
-   * @type {(null|number)}
-   */
-  prevTime = null;
-  /**
-   * `callback` function to execute.
-   * @type {function} 
-   */
-  callback = () => null;
-  /**
-   * null (initial) or Int time in Ms of its timeout execution.
-   * @type {(null|number)} 
-   */
-  timeOut = null;
-
-  /**
-   * null (initial) or Int datetime of next execution iteration.
-   * @type {(null|number)} 
-   */
-  executeAtTime = null;
-
-  /**
-   * Status value.
-   * @type { StatusTimeout }
-   */
-  status = StatusTimeout.IN_PROCESS;
-  /**
-   * null or Int datetime when current interval is paused.
-   * @type {(null|number)}
-   */
-  pausedAtTime = null;
-
-  
-
-  /**
    * Constructor
-   * @param {callback} callback - Int datetime to check for next execution iteration.
-   * @param {number} timeOut - Int datetime to check for next execution iteration.
+   * @param {callback} callback - Function to execute.
+   * @param {number} timeOut - Int datetime to check for execution.
    */
   constructor(callback, timeOut) {
+    /**
+     * null (initial) or Int datetime of its prev execution iteration.
+     * @type {(null|number)}
+     */
     this.prevTime = getCurrentTime();
+    /**
+     * `callback` function to execute.
+     * @type {function}
+     */
     this.callback = callback;
+    /**
+     * Int time in Ms of its timeout execution.
+     * @type {number}
+     */
     this.timeOut = timeOut;
-    this.executeAtTime = this.prevTime + this.timeOut;
+
+    /**
+     * Int datetime of next execution iteration.
+     * @type {number}
+     */
+    this.executeAtTime = this.prevTime + timeOut;
+
+    /**
+     * Status value.
+     * @type { StatusTimeout }
+     */
+    this.status = StatusTimeout.IN_PROCESS;
+    /**
+     * null or Int datetime when current interval is paused.
+     * @type {(null|number)}
+     */
+    this.pausedAtTime = null;
   }
 
   /**
    * Check its Timeout for execution.
    * @param {number} timeToCheck - Int datetime to check for the execution.
-   * @returns {boolean} done status.
+   * @return {boolean} done state.
    */
   checkTimeToExecute(timeToCheck) {
     if (
@@ -395,6 +376,7 @@ class Timeout {
 
   /**
    * Execute the `callback` function.
+   * @return {boolean} done state.
    */
   execute() {
     this.callback.call();
@@ -413,7 +395,7 @@ class Timeout {
 
   /**
    * Continue to execute after pause.
-   * @param {number} continueAtTime - Int datetime to calculate downtime for the timeout iteration.
+   * @param {number} continueAtTime - Int datetime to calculate its downtime.
    */
   continueExecuting(continueAtTime) {
     this.executeAtTime += continueAtTime - this.pausedAtTime;
@@ -423,6 +405,7 @@ class Timeout {
 
   /**
    * Disable execution.
+   * @return {Timeout} this.
    */
   disable() {
     this.status = StatusTimeout.DISABLED;
@@ -431,6 +414,7 @@ class Timeout {
 
   /**
    * Enable execution.
+   * @return {Timeout} this.
    */
   enable() {
     this.prevTime = getCurrentTime();
@@ -441,11 +425,10 @@ class Timeout {
 
   /**
    * Restart execution.
+   * @return {Timeout} this.
    */
   restart() {
-    this.disable();
-    this.enable();
-    return this;
+    return this.disable().enable();
   }
 
   /**
@@ -462,5 +445,4 @@ class Timeout {
 }
 
 
-
-export { Intervaq, Interval, Timeout };
+export {Intervaq, Interval, Timeout};
