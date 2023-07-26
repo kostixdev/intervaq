@@ -4,7 +4,9 @@
   "description": "Just another one solution for intervals and timeouts via requestAnimationFrame",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:docs": "node node_modules/.bin/jsdoc2md --heading-depth 1 ./src/index.js > ./docs/README.md",
+    "pre-commit": "npm run build:docs && git add ./docs/*"
   },
   "keywords": [
     "setInterval",
@@ -14,6 +16,7 @@
   "author": "kostix.dev",
   "license": "MIT",
   "devDependencies": {
-    "git-conventional-commits": "^2.6.5"
+    "git-conventional-commits": "^2.6.5",
+    "jsdoc-to-markdown": "^8.0.0"
   }
 }
