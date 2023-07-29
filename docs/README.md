@@ -8,8 +8,8 @@
 # Functions
 
 <dl>
-<dt><a href="#getCurrentTime">getCurrentTime()</a> ⇒ <code>number</code></dt>
-<dd><p>Returns Int datetime.</p>
+<dt><a href="#getTimestamp">getTimestamp()</a> ⇒ <code>number</code></dt>
+<dd><p>Returns timestamp.</p>
 </dd>
 </dl>
 
@@ -32,7 +32,7 @@ const intervaq = new Intervaq();
         * [.clearInterval(interval)](#module_Intervaq..Intervaq+clearInterval) ⇒ <code>boolean</code>
         * [.setTimeout(fnToExecute, timeOut)](#module_Intervaq..Intervaq+setTimeout) ⇒ <code>Timeout</code>
         * [.clearTimeout(timeout)](#module_Intervaq..Intervaq+clearTimeout) ⇒ <code>boolean</code>
-        * [.checkToExecute()](#module_Intervaq..Intervaq+checkToExecute)
+        * [.checkToExecute(timestamp)](#module_Intervaq..Intervaq+checkToExecute)
         * [.pauseProcessing()](#module_Intervaq..Intervaq+pauseProcessing)
         * [.continueProcessing()](#module_Intervaq..Intervaq+continueProcessing)
     * [~Interval](#module_Intervaq..Interval)
@@ -88,7 +88,7 @@ Main Intervaq class
     * [.clearInterval(interval)](#module_Intervaq..Intervaq+clearInterval) ⇒ <code>boolean</code>
     * [.setTimeout(fnToExecute, timeOut)](#module_Intervaq..Intervaq+setTimeout) ⇒ <code>Timeout</code>
     * [.clearTimeout(timeout)](#module_Intervaq..Intervaq+clearTimeout) ⇒ <code>boolean</code>
-    * [.checkToExecute()](#module_Intervaq..Intervaq+checkToExecute)
+    * [.checkToExecute(timestamp)](#module_Intervaq..Intervaq+checkToExecute)
     * [.pauseProcessing()](#module_Intervaq..Intervaq+pauseProcessing)
     * [.continueProcessing()](#module_Intervaq..Intervaq+continueProcessing)
 
@@ -118,7 +118,7 @@ Status value
 <a name="module_Intervaq..Intervaq+pausedAt"></a>
 
 ### intervaq.pausedAt : <code>null</code> \| <code>number</code>
-null or Int datetime when Intervaq is paused
+null or timestamp when Intervaq is paused
 
 **Kind**: instance property of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
 <a name="module_Intervaq..Intervaq+setInterval"></a>
@@ -173,10 +173,15 @@ clearTimeout functionality.
 
 <a name="module_Intervaq..Intervaq+checkToExecute"></a>
 
-### intervaq.checkToExecute()
+### intervaq.checkToExecute(timestamp)
 Checking intervals and timeouts to execute
 
 **Kind**: instance method of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| timestamp | <code>number</code> | timestamp (from `requestAnimationFrame`, etc) |
+
 <a name="module_Intervaq..Intervaq+pauseProcessing"></a>
 
 ### intervaq.pauseProcessing()
@@ -227,7 +232,7 @@ Constructor.
 <a name="module_Intervaq..Interval+prevTime"></a>
 
 ### interval.prevTime : <code>number</code>
-Int datetime of its prev execution iteration.
+timestamp of its prev execution iteration.
 
 **Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
 <a name="module_Intervaq..Interval+callback"></a>
@@ -245,7 +250,7 @@ Int time in Ms of its interval execution.
 <a name="module_Intervaq..Interval+executeAtTime"></a>
 
 ### interval.executeAtTime : <code>number</code>
-Int datetime of next execution iteration.
+timestamp of next execution iteration.
 
 **Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
 <a name="module_Intervaq..Interval+status"></a>
@@ -257,7 +262,7 @@ Status value.
 <a name="module_Intervaq..Interval+pausedAtTime"></a>
 
 ### interval.pausedAtTime : <code>null</code> \| <code>number</code>
-null or Int datetime when current interval is paused.
+null or timestamp when current interval is paused.
 
 **Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
 <a name="module_Intervaq..Interval+checkTimeToExecute"></a>
@@ -269,7 +274,7 @@ Check its Interval for execution.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| timeToCheck | <code>number</code> | Int datetime to check for execution. |
+| timeToCheck | <code>number</code> | timestamp to check for execution. |
 
 <a name="module_Intervaq..Interval+execute"></a>
 
@@ -286,7 +291,7 @@ Set execution on pause.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pausedAtTime | <code>number</code> | Int datetime to set its `pausedAtTime`. |
+| pausedAtTime | <code>number</code> | timestamp to set its `pausedAtTime`. |
 
 <a name="module_Intervaq..Interval+continueExecuting"></a>
 
@@ -297,7 +302,7 @@ Continue to execute after pause.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| continueAtTime | <code>number</code> | Int datetime to calculate its downtime. |
+| continueAtTime | <code>number</code> | timestamp to calculate its downtime. |
 
 <a name="module_Intervaq..Interval+disable"></a>
 
@@ -359,12 +364,12 @@ Constructor
 | Param | Type | Description |
 | --- | --- | --- |
 | callback | <code>callback</code> | Function to execute. |
-| timeOut | <code>number</code> | Int datetime to check for execution. |
+| timeOut | <code>number</code> | timestamp to check for execution. |
 
 <a name="module_Intervaq..Timeout+prevTime"></a>
 
 ### timeout.prevTime : <code>null</code> \| <code>number</code>
-null (initial) or Int datetime of its prev execution iteration.
+null (initial) or timestamp of its prev execution iteration.
 
 **Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
 <a name="module_Intervaq..Timeout+callback"></a>
@@ -382,7 +387,7 @@ Int time in Ms of its timeout execution.
 <a name="module_Intervaq..Timeout+executeAtTime"></a>
 
 ### timeout.executeAtTime : <code>number</code>
-Int datetime of next execution iteration.
+timestamp of next execution iteration.
 
 **Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
 <a name="module_Intervaq..Timeout+status"></a>
@@ -394,7 +399,7 @@ Status value.
 <a name="module_Intervaq..Timeout+pausedAtTime"></a>
 
 ### timeout.pausedAtTime : <code>null</code> \| <code>number</code>
-null or Int datetime when current interval is paused.
+null or timestamp when current interval is paused.
 
 **Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
 <a name="module_Intervaq..Timeout+checkTimeToExecute"></a>
@@ -407,7 +412,7 @@ Check its Timeout for execution.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| timeToCheck | <code>number</code> | Int datetime to check for the execution. |
+| timeToCheck | <code>number</code> | timestamp to check for the execution. |
 
 <a name="module_Intervaq..Timeout+execute"></a>
 
@@ -425,7 +430,7 @@ Set execution on pause.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pausedAtTime | <code>number</code> | Int datetime to set its `pausedAtTime`. |
+| pausedAtTime | <code>number</code> | timestamp to set its `pausedAtTime`. |
 
 <a name="module_Intervaq..Timeout+continueExecuting"></a>
 
@@ -436,7 +441,7 @@ Continue to execute after pause.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| continueAtTime | <code>number</code> | Int datetime to calculate its downtime. |
+| continueAtTime | <code>number</code> | timestamp to calculate its downtime. |
 
 <a name="module_Intervaq..Timeout+disable"></a>
 
@@ -491,6 +496,7 @@ Status of Interval
 | PAUSED | <code>number</code> | <code>0</code> | paused |
 | IN_PROCESS | <code>number</code> | <code>1</code> | in process |
 | DISABLED | <code>number</code> | <code>2</code> | disabled for execution |
+| EXECUTING | <code>number</code> | <code>3</code> | execution is processing |
 
 <a name="module_Intervaq..StatusTimeout"></a>
 
@@ -506,11 +512,12 @@ Status of Timeout
 | IN_PROCESS | <code>number</code> | <code>1</code> | in process |
 | DONE | <code>number</code> | <code>2</code> | execution done |
 | DISABLED | <code>number</code> | <code>3</code> | disabled for execution |
+| EXECUTING | <code>number</code> | <code>4</code> | execution is processing |
 
-<a name="getCurrentTime"></a>
+<a name="getTimestamp"></a>
 
-# getCurrentTime() ⇒ <code>number</code>
-Returns Int datetime.
+# getTimestamp() ⇒ <code>number</code>
+Returns timestamp.
 
 **Kind**: global function  
-**Returns**: <code>number</code> - - int datetime  
+**Returns**: <code>number</code> - - timestamp  
