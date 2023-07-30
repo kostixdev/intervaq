@@ -23,6 +23,12 @@ const timestampInaccuracy = 2; // of DOMHighResTimeStamp
  */
 const timestampMissmatch = 1000 / 60; // of 60fps
 
+/**
+ * Difference between two timestamps.
+ * @param {number} t0 - 1st timestamp.
+ * @param {number} t1 - 2nd timestamp.
+ * @return {number} - difference value.
+ */
 const timestampDiff = (t0, t1) => {
   return Math.abs(t0 - t1);
 };
@@ -42,7 +48,21 @@ const animateAction = (timestamp) => {
 /** timeouts or intervals actions list for test cases */
 const timeCase = {};
 
+/** @todo: finish and refac */
+// /**
+//  * Callback for setTimeout via `intervaq`.
+//  * @callback setTimeoutCallback
+//  * @param {any} error - some error data.
+//  * @param {any} data - some useful data:
+//  */
 
+// /**
+//  * Basic setTimeout case for testing purposes via `intervaq`.
+//  * @param {string} caseName - namekey of timeCase.
+//  * @param {callback} callback - function to be executed.
+//  * @param {number} timeOut - timeOut value.
+//  * @callback callback
+//  */
 const setTimeoutTimeCase = (caseName, callback, timeOut) => {
   const timeStart = getTimestamp();
   timeCase[caseName] = intervaq.setTimeout(() => {
@@ -64,6 +84,31 @@ const setIntervalTimeCase = (caseName, callback, timeInterval) => {
   }, timeInterval);
 };
 
+const calcBasicIntervalTimesValues = (
+    timeStart,
+    timeExecution,
+    times = []
+) => {
+  const timeExecutionDiff = timeExecution - timeStart;
+  const timeExecutionDiffToCheck =
+      times.reduce((sum, value) => sum + value, 0);
+  const timeExpectedDiff =
+      times.reduce(
+          (sum, value) => sum + value + timestampMissmatch,
+          0
+      );
+  const timeDiff =
+      timestampDiff(timeExecutionDiff, timeExpectedDiff);
+  const timeDiffToCheck =
+      (timestampMissmatch + timestampInaccuracy) * times.length;
+  return {
+    timeExecutionDiff,
+    timeExecutionDiffToCheck,
+    timeDiff,
+    timeDiffToCheck,
+  };
+};
+
 
 beforeAll((done) => {
   animateAction();
@@ -79,9 +124,6 @@ describe('basic setTimeout functionality', () => {
         return;
       }
       try {
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(1000);
-        // expect(timeDiff).toBeLessThanOrEqual(1000 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 1000 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -105,9 +147,6 @@ describe('basic setTimeout functionality', () => {
         return;
       }
       try {
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(100);
-        // expect(timeDiff).toBeLessThanOrEqual(100 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 100 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -131,9 +170,6 @@ describe('basic setTimeout functionality', () => {
         return;
       }
       try {
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(10);
-        // expect(timeDiff).toBeLessThanOrEqual(10 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 10 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -200,11 +236,6 @@ describe('basic setTimeout functionality', () => {
         return;
       }
       try {
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(200 + 500 + 1000);
-        // expect(timeDiff).toBeLessThanOrEqual(
-        //     200 + 500 + 1000 + ( (1000/60) * 3 ) // 3 time oversight
-        // );
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff =
             200 + timestampMissmatch +
@@ -230,9 +261,6 @@ describe('basic setTimeout functionality', () => {
         return;
       }
       try {
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(200);
-        // expect(timeDiff).toBeLessThanOrEqual(200 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 200 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -257,9 +285,6 @@ describe('basic setTimeout functionality', () => {
         return;
       }
       try {
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(500);
-        // expect(timeDiff).toBeLessThanOrEqual(500 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 500 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -285,11 +310,6 @@ describe('basic setTimeout functionality', () => {
         return;
       }
       try {
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(500 + 1000);
-        // expect(timeDiff).toBeLessThanOrEqual(
-        //     500 + 1000 + ( (1000/60) * 2 ) // 2 time oversight
-        // );
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff =
             500 + timestampMissmatch +
@@ -314,9 +334,6 @@ describe('basic setTimeout functionality', () => {
         return;
       }
       try {
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(500);
-        // expect(timeDiff).toBeLessThanOrEqual(500 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 500 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -342,9 +359,6 @@ describe('basic setTimeout functionality', () => {
         return;
       }
       try {
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(500);
-        // expect(timeDiff).toBeLessThanOrEqual(500 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 500 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -372,6 +386,7 @@ describe('basic setInterval functionality', () => {
   // - OK
   test('setInterval every 200ms for 5times', (done) => {
     let intervalCount = 0;
+    const intervalTimes = [];
     const callback200 = (error, data) => {
       if (error) {
         done(error);
@@ -379,13 +394,18 @@ describe('basic setInterval functionality', () => {
       }
       try {
         intervalCount = data[2];
-        const timeExecutionDiff = data[1] - data[0];
-        const timeExpectedDiff =
-            200 * intervalCount + timestampMissmatch * intervalCount;
-        const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
-        expect(timeExecutionDiff).toBeGreaterThanOrEqual(200 * intervalCount);
+        intervalTimes.push(200);
+        const {
+          timeExecutionDiff,
+          timeExecutionDiffToCheck,
+          timeDiff,
+          timeDiffToCheck,
+        } = calcBasicIntervalTimesValues(data[0], data[1], intervalTimes);
+        expect(timeExecutionDiff).toBeGreaterThanOrEqual(
+            timeExecutionDiffToCheck
+        );
         expect(timeDiff).toBeLessThanOrEqual(
-            (timestampMissmatch + timestampInaccuracy) * intervalCount
+            timeDiffToCheck
         );
 
         if (intervalCount == 5) {
@@ -414,6 +434,7 @@ describe('basic setInterval functionality', () => {
   // - OK
   test('setInterval every 200ms and clearInterval in 1100ms', (done) => {
     let intervalCount = 0;
+    const intervalTimes = [];
     const callback200 = (error, data) => {
       if (error) {
         done(error);
@@ -421,17 +442,18 @@ describe('basic setInterval functionality', () => {
       }
       try {
         intervalCount = data[2];
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(200 * data[2]);
-        // expect(timeDiff)
-        //     .toBeLessThanOrEqual(200 * data[2] + (1000/60) * data[2]);
-        const timeExecutionDiff = data[1] - data[0];
-        const timeExpectedDiff =
-            200 * intervalCount + timestampMissmatch * intervalCount;
-        const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
-        expect(timeExecutionDiff).toBeGreaterThanOrEqual(200 * intervalCount);
+        intervalTimes.push(200);
+        const {
+          timeExecutionDiff,
+          timeExecutionDiffToCheck,
+          timeDiff,
+          timeDiffToCheck,
+        } = calcBasicIntervalTimesValues(data[0], data[1], intervalTimes);
+        expect(timeExecutionDiff).toBeGreaterThanOrEqual(
+            timeExecutionDiffToCheck
+        );
         expect(timeDiff).toBeLessThanOrEqual(
-            (timestampMissmatch + timestampInaccuracy) * intervalCount
+            timeDiffToCheck
         );
 
         expect(data[2]).toBeLessThan(6);
@@ -446,9 +468,6 @@ describe('basic setInterval functionality', () => {
       }
       try {
         intervaq.clearInterval(timeCase.setInterval200Ms5ToClearIn1100ms);
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(1100);
-        // expect(timeDiff).toBeLessThanOrEqual(1100 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 1100 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -466,9 +485,6 @@ describe('basic setInterval functionality', () => {
         return;
       }
       try {
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(1300);
-        // expect(timeDiff).toBeLessThanOrEqual(1300 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 1300 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -495,6 +511,7 @@ describe('basic setInterval functionality', () => {
   // - OK
   test('setInterval every 1000ms and clearInterval in 500ms', (done) => {
     let intervalCount = 0;
+    const intervalTimes = [];
     const callback1000 = (error, data) => {
       if (error) {
         done(error);
@@ -502,17 +519,18 @@ describe('basic setInterval functionality', () => {
       }
       try {
         intervalCount = data[2];
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(1000 * data[2]);
-        // expect(timeDiff)
-        //     .toBeLessThanOrEqual(1000 * data[2] + (1000/60) * data[2]);
-        const timeExecutionDiff = data[1] - data[0];
-        const timeExpectedDiff =
-            1000 * intervalCount + timestampMissmatch * intervalCount;
-        const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
-        expect(timeExecutionDiff).toBeGreaterThanOrEqual(1000 * intervalCount);
+        intervalTimes.push(1000);
+        const {
+          timeExecutionDiff,
+          timeExecutionDiffToCheck,
+          timeDiff,
+          timeDiffToCheck,
+        } = calcBasicIntervalTimesValues(data[0], data[1], intervalTimes);
+        expect(timeExecutionDiff).toBeGreaterThanOrEqual(
+            timeExecutionDiffToCheck
+        );
         expect(timeDiff).toBeLessThanOrEqual(
-            timestampMissmatch + timestampInaccuracy
+            timeDiffToCheck
         );
       } catch (error) {
         done(error);
@@ -525,9 +543,6 @@ describe('basic setInterval functionality', () => {
       }
       try {
         intervaq.clearInterval(timeCase.setInterval1000MsToClearIn500ms);
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(500);
-        // expect(timeDiff).toBeLessThanOrEqual(500 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 500 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -545,9 +560,6 @@ describe('basic setInterval functionality', () => {
         return;
       }
       try {
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(1200);
-        // expect(timeDiff).toBeLessThanOrEqual(1200 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 1200 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -582,29 +594,34 @@ describe('basic setInterval functionality', () => {
         const timeExecutionDiff = data[1] - data[0];
         switch (intervalCount) {
           case 1: {
-            const timeExpectedDiff = 200 + timestampMissmatch;
-            const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
-            expect(timeExecutionDiff).toBeGreaterThanOrEqual(200);
+            const {
+              timeExecutionDiff,
+              timeExecutionDiffToCheck,
+              timeDiff,
+              timeDiffToCheck,
+            } = calcBasicIntervalTimesValues(data[0], data[1], [200]);
+            expect(timeExecutionDiff).toBeGreaterThanOrEqual(
+                timeExecutionDiffToCheck
+            );
             expect(timeDiff).toBeLessThanOrEqual(
-                timestampMissmatch + timestampInaccuracy
+                timeDiffToCheck
             );
             break;
           }
           case 2: {
-            const timeExpectedDiff =
-                200 + timestampMissmatch +
-                100 + timestampMissmatch +
-                500 + timestampMissmatch +
-                200 + timestampMissmatch;
-            const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
+            const {
+              timeExecutionDiff,
+              timeExecutionDiffToCheck,
+              timeDiff,
+              timeDiffToCheck,
+            } = calcBasicIntervalTimesValues(
+                data[0], data[1], [200, 100, 500, 200]
+            );
             expect(timeExecutionDiff).toBeGreaterThanOrEqual(
-                200 + 100 + 500 + 200
+                timeExecutionDiffToCheck
             );
             expect(timeDiff).toBeLessThanOrEqual(
-                timestampMissmatch + timestampInaccuracy + // of 1st 200ms
-                timestampMissmatch + timestampInaccuracy + // of 100ms
-                timestampMissmatch + timestampInaccuracy + // of 500Ms pause
-                timestampMissmatch + timestampInaccuracy // of 2nd 200Ms
+                timeDiffToCheck
             );
             break;
           }
@@ -621,9 +638,6 @@ describe('basic setInterval functionality', () => {
       }
       try {
         timeCase.setInterval200MsToDisableEnable.disable();
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(300);
-        // expect(timeDiff).toBeLessThanOrEqual(300 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 300 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -649,9 +663,6 @@ describe('basic setInterval functionality', () => {
       }
       try {
         timeCase.setInterval200MsToDisableEnable.enable();
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(500);
-        // expect(timeDiff).toBeLessThanOrEqual(500 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 500 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -672,9 +683,6 @@ describe('basic setInterval functionality', () => {
       }
       try {
         intervaq.clearInterval(timeCase.setInterval200MsToDisableEnable);
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(1100);
-        // expect(timeDiff).toBeLessThanOrEqual(1100 + (1000/60));
         const timeExecutionDiff = data[1] - data[0];
         const timeExpectedDiff = 1100 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
@@ -697,6 +705,108 @@ describe('basic setInterval functionality', () => {
   });
 
   // - OK
+  test('setInterval every 200Ms for 3times to restart after 300ms', (done) => {
+    let intervalCount = 0;
+    const callback200 = (error, data) => {
+      if (error) {
+        done(error);
+        return;
+      }
+      try {
+        intervalCount = data[2];
+        switch (intervalCount) {
+          case 1: {
+            const {
+              timeExecutionDiff,
+              timeExecutionDiffToCheck,
+              timeDiff,
+              timeDiffToCheck,
+            } = calcBasicIntervalTimesValues(
+                data[0], data[1], [200]
+            );
+            expect(timeExecutionDiff).toBeGreaterThanOrEqual(
+                timeExecutionDiffToCheck
+            );
+            expect(timeDiff).toBeLessThanOrEqual(
+                timeDiffToCheck
+            );
+            break;
+          }
+          case 2: {
+            const {
+              timeExecutionDiff,
+              timeExecutionDiffToCheck,
+              timeDiff,
+              timeDiffToCheck,
+            } = calcBasicIntervalTimesValues(
+                data[0], data[1], [200, 100, 200]
+            );
+            expect(timeExecutionDiff).toBeGreaterThanOrEqual(
+                timeExecutionDiffToCheck
+            );
+            expect(timeDiff).toBeLessThanOrEqual(
+                timeDiffToCheck
+            );
+            break;
+          }
+          case 3: {
+            const {
+              timeExecutionDiff,
+              timeExecutionDiffToCheck,
+              timeDiff,
+              timeDiffToCheck,
+            } = calcBasicIntervalTimesValues(
+                data[0], data[1], [200, 100, 200, 200]
+            );
+            expect(timeExecutionDiff).toBeGreaterThanOrEqual(
+                timeExecutionDiffToCheck
+            );
+            expect(timeDiff).toBeLessThanOrEqual(
+                timeDiffToCheck
+            );
+            // is last iteration
+            const clearedTrue = intervaq.clearInterval(
+                timeCase.setInterval200MsToRestart
+            );
+            expect(clearedTrue).toBe(true);
+            const clearedFalse = intervaq.clearInterval(
+                timeCase.setInterval200MsToRestart
+            );
+            expect(clearedFalse).toBe(false);
+
+            done();
+            break;
+          }
+        }
+      } catch (error) {
+        done(error);
+      }
+    };
+    const callback300 = (error, data) => {
+      if (error) {
+        done(error);
+        return;
+      }
+      try {
+        const timeExecutionDiff = data[1] - data[0];
+        const timeExpectedDiff = 300 + timestampMissmatch;
+        const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
+        expect(timeExecutionDiff).toBeGreaterThanOrEqual(300);
+        expect(timeDiff).toBeLessThanOrEqual(
+            timestampMissmatch + timestampInaccuracy
+        );
+
+        timeCase.setInterval200MsToRestart.restart();
+        // done();
+      } catch (error) {
+        done(error);
+      }
+    };
+    setIntervalTimeCase('setInterval200MsToRestart', callback200, 200);
+    setTimeoutTimeCase('setTimeout300MsForRestart', callback300, 300);
+  });
+
+  // - OK
   test('clearInterval for setInterval 500Ms return false', (done) => {
     let intervalCount = 0;
     const callback500 = (error, data) => {
@@ -706,18 +816,23 @@ describe('basic setInterval functionality', () => {
       }
       try {
         intervalCount = data[2];
-        // const timeDiff = data[1] - data[0];
-        // expect(timeDiff).toBeGreaterThanOrEqual(500 * data[2]);
-        // expect(timeDiff).toBeLessThanOrEqual(
-        //     500 * data[2] + (1000/60) * data[2]
-        // );
-        const timeExecutionDiff = data[1] - data[0];
-        const timeExpectedDiff =
-            500 * intervalCount + timestampMissmatch * intervalCount;
-        const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
-        expect(timeExecutionDiff).toBeGreaterThanOrEqual(500 * intervalCount);
+        if (intervalCount > 1) {
+          done(`setInterval every 500ms iteration #${intervalCount} error`);
+          // return;
+        }
+        const {
+          timeExecutionDiff,
+          timeExecutionDiffToCheck,
+          timeDiff,
+          timeDiffToCheck,
+        } = calcBasicIntervalTimesValues(
+            data[0], data[1], [500]
+        );
+        expect(timeExecutionDiff).toBeGreaterThanOrEqual(
+            timeExecutionDiffToCheck
+        );
         expect(timeDiff).toBeLessThanOrEqual(
-            (timestampMissmatch + timestampInaccuracy) * intervalCount
+            timeDiffToCheck
         );
 
         const clearedTrue = intervaq.clearInterval(timeCase.setInterval500Ms);
@@ -823,7 +938,97 @@ describe('global intervaq functionality', () => {
     }, 300);
   });
 
+  // - OK
+  test('set intervals 200ms/300ms/500ms pause on 300Ms for 300ms', (done) => {
+    let intervalCount200 = 0;
+    // let intervalCount300 = 0;
+    // let intervalCount500 = 0;
+    const callback200 = (error, data) => {
+      if (error) {
+        done(error);
+        return;
+      }
+      try {
+        intervalCount200 = data[2];
+        switch (intervalCount200) {
+          case 1: {
+            const {
+              timeExecutionDiff,
+              timeExecutionDiffToCheck,
+              timeDiff,
+              timeDiffToCheck,
+            } = calcBasicIntervalTimesValues(data[0], data[1], [200]);
+            expect(timeExecutionDiff).toBeGreaterThanOrEqual(
+                timeExecutionDiffToCheck
+            );
+            expect(timeDiff).toBeLessThanOrEqual(
+                timeDiffToCheck
+            );
+            break;
+          }
+          case 2: {
+            const {
+              timeExecutionDiff,
+              timeExecutionDiffToCheck,
+              timeDiff,
+              timeDiffToCheck,
+            } = calcBasicIntervalTimesValues(
+                data[0], data[1], [200, 100, 300, 100]);
+            expect(timeExecutionDiff).toBeGreaterThanOrEqual(
+                timeExecutionDiffToCheck
+            );
+            expect(timeDiff).toBeLessThanOrEqual(
+                timeDiffToCheck
+            );
+            break;
+          }
+          case 3: {
+            const {
+              timeExecutionDiff,
+              timeExecutionDiffToCheck,
+              timeDiff,
+              timeDiffToCheck,
+            } = calcBasicIntervalTimesValues(
+                data[0], data[1], [200, 100, 300, 100, 200]);
+            expect(timeExecutionDiff).toBeGreaterThanOrEqual(
+                timeExecutionDiffToCheck
+            );
+            expect(timeDiff).toBeLessThanOrEqual(
+                timeDiffToCheck
+            );
+            // is last iteration
+            const clearedTrue = intervaq.clearInterval(
+                timeCase.setInterval200MsToPause
+            );
+            expect(clearedTrue).toBe(true);
+            const clearedFalse = intervaq.clearInterval(
+                timeCase.setInterval200MsToPause
+            );
+            expect(clearedFalse).toBe(false);
+
+            done();
+            break;
+          }
+          default: {
+            done(`setInterval 200ms execution #${intervalCount100} error`);
+            break;
+          }
+        }
+      } catch (error) {
+        done(error);
+      }
+    };
+    setIntervalTimeCase('setInterval200MsToPause', callback200, 200);
+    setTimeout(() => {
+      intervaq.pauseProcessing();
+      setTimeout(() => {
+        intervaq.continueProcessing();
+      }, 300);
+    }, 300);
+  });
+
   /** @todo: need more cases */
+  // both on pause/continue
 });
 
 
