@@ -131,13 +131,14 @@ testTimeout in 5500ms #0 at 1689877236288
 
   - [ ] apply some pattern... maybe...
   - [ ] mk some prettify
-  - [ ] mk some tests
   - [ ] mk some cleanup... maybe...
   - [ ] modify some `checkToExecute` functionality
   - [ ] chck `clearInterval` on `executionInProcess`
   - [ ] try to keep pausing at its `Intervaq` class only
   - [ ] do smth with `destroy` method
   - [ ] transfer to typescript... maybe...
+  - [ ] check some scope executing
+  - [ ] mk 100% test coverage
 
 
 
