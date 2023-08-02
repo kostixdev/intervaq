@@ -11,6 +11,9 @@
 <dt><a href="#getTimestamp">getTimestamp()</a> ⇒ <code>number</code></dt>
 <dd><p>Returns timestamp.</p>
 </dd>
+<dt><a href="#dummyCallback">dummyCallback()</a> ⇒ <code>null</code></dt>
+<dd><p>Dummy callback to avoid calls on destruct.</p>
+</dd>
 </dl>
 
 <a name="module_Intervaq"></a>
@@ -36,9 +39,9 @@ const intervaq = new Intervaq();
         * [.pauseProcessing()](#module_Intervaq..Intervaq+pauseProcessing)
         * [.continueProcessing()](#module_Intervaq..Intervaq+continueProcessing)
     * [~Interval](#module_Intervaq..Interval)
-        * [new Interval(callback, timeInterval)](#new_module_Intervaq..Interval_new)
+        * [new Interval(callback, timeInterval, isPaused)](#new_module_Intervaq..Interval_new)
         * [.prevTime](#module_Intervaq..Interval+prevTime) : <code>number</code>
-        * [.callback](#module_Intervaq..Interval+callback) : <code>function</code>
+        * [._callback_](#module_Intervaq..Interval+_callback_) : <code>function</code>
         * [.timeInterval](#module_Intervaq..Interval+timeInterval) : <code>number</code>
         * [.executeAtTime](#module_Intervaq..Interval+executeAtTime) : <code>number</code>
         * [.status](#module_Intervaq..Interval+status) : <code>StatusInterval</code>
@@ -52,9 +55,9 @@ const intervaq = new Intervaq();
         * [.restart()](#module_Intervaq..Interval+restart) ⇒ <code>Interval</code>
         * [.destroy()](#module_Intervaq..Interval+destroy)
     * [~Timeout](#module_Intervaq..Timeout)
-        * [new Timeout(callback, timeOut)](#new_module_Intervaq..Timeout_new)
+        * [new Timeout(callback, timeOut, isPaused)](#new_module_Intervaq..Timeout_new)
         * [.prevTime](#module_Intervaq..Timeout+prevTime) : <code>null</code> \| <code>number</code>
-        * [.callback](#module_Intervaq..Timeout+callback) : <code>function</code>
+        * [._callback_](#module_Intervaq..Timeout+_callback_) : <code>function</code>
         * [.timeOut](#module_Intervaq..Timeout+timeOut) : <code>number</code>
         * [.executeAtTime](#module_Intervaq..Timeout+executeAtTime) : <code>number</code>
         * [.status](#module_Intervaq..Timeout+status) : <code>StatusTimeout</code>
@@ -202,9 +205,9 @@ Interval item class
 **Kind**: inner class of [<code>Intervaq</code>](#module_Intervaq)  
 
 * [~Interval](#module_Intervaq..Interval)
-    * [new Interval(callback, timeInterval)](#new_module_Intervaq..Interval_new)
+    * [new Interval(callback, timeInterval, isPaused)](#new_module_Intervaq..Interval_new)
     * [.prevTime](#module_Intervaq..Interval+prevTime) : <code>number</code>
-    * [.callback](#module_Intervaq..Interval+callback) : <code>function</code>
+    * [._callback_](#module_Intervaq..Interval+_callback_) : <code>function</code>
     * [.timeInterval](#module_Intervaq..Interval+timeInterval) : <code>number</code>
     * [.executeAtTime](#module_Intervaq..Interval+executeAtTime) : <code>number</code>
     * [.status](#module_Intervaq..Interval+status) : <code>StatusInterval</code>
@@ -220,7 +223,7 @@ Interval item class
 
 <a name="new_module_Intervaq..Interval_new"></a>
 
-### new Interval(callback, timeInterval)
+### new Interval(callback, timeInterval, isPaused)
 Constructor.
 
 
@@ -228,6 +231,7 @@ Constructor.
 | --- | --- | --- |
 | callback | <code>callback</code> | function to execute |
 | timeInterval | <code>number</code> | time of execution in Ms |
+| isPaused | <code>boolean</code> | is intervaq paused on setInterval call |
 
 <a name="module_Intervaq..Interval+prevTime"></a>
 
@@ -235,9 +239,9 @@ Constructor.
 timestamp of its prev execution iteration.
 
 **Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+callback"></a>
+<a name="module_Intervaq..Interval+_callback_"></a>
 
-### interval.callback : <code>function</code>
+### interval.\_callback\_ : <code>function</code>
 `callback` function to execute.
 
 **Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
@@ -339,9 +343,9 @@ Timeout item class
 **Kind**: inner class of [<code>Intervaq</code>](#module_Intervaq)  
 
 * [~Timeout](#module_Intervaq..Timeout)
-    * [new Timeout(callback, timeOut)](#new_module_Intervaq..Timeout_new)
+    * [new Timeout(callback, timeOut, isPaused)](#new_module_Intervaq..Timeout_new)
     * [.prevTime](#module_Intervaq..Timeout+prevTime) : <code>null</code> \| <code>number</code>
-    * [.callback](#module_Intervaq..Timeout+callback) : <code>function</code>
+    * [._callback_](#module_Intervaq..Timeout+_callback_) : <code>function</code>
     * [.timeOut](#module_Intervaq..Timeout+timeOut) : <code>number</code>
     * [.executeAtTime](#module_Intervaq..Timeout+executeAtTime) : <code>number</code>
     * [.status](#module_Intervaq..Timeout+status) : <code>StatusTimeout</code>
@@ -357,7 +361,7 @@ Timeout item class
 
 <a name="new_module_Intervaq..Timeout_new"></a>
 
-### new Timeout(callback, timeOut)
+### new Timeout(callback, timeOut, isPaused)
 Constructor
 
 
@@ -365,6 +369,7 @@ Constructor
 | --- | --- | --- |
 | callback | <code>callback</code> | Function to execute. |
 | timeOut | <code>number</code> | timestamp to check for execution. |
+| isPaused | <code>boolean</code> | is intervaq paused on setInterval call. |
 
 <a name="module_Intervaq..Timeout+prevTime"></a>
 
@@ -372,9 +377,9 @@ Constructor
 null (initial) or timestamp of its prev execution iteration.
 
 **Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-<a name="module_Intervaq..Timeout+callback"></a>
+<a name="module_Intervaq..Timeout+_callback_"></a>
 
-### timeout.callback : <code>function</code>
+### timeout.\_callback\_ : <code>function</code>
 `callback` function to execute.
 
 **Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
@@ -497,6 +502,7 @@ Status of Interval
 | IN_PROCESS | <code>number</code> | <code>1</code> | in process |
 | DISABLED | <code>number</code> | <code>2</code> | disabled for execution |
 | EXECUTING | <code>number</code> | <code>3</code> | execution is processing |
+| DONE | <code>number</code> | <code>4</code> | execution done |
 
 <a name="module_Intervaq..StatusTimeout"></a>
 
@@ -521,3 +527,10 @@ Returns timestamp.
 
 **Kind**: global function  
 **Returns**: <code>number</code> - - timestamp  
+<a name="dummyCallback"></a>
+
+# dummyCallback() ⇒ <code>null</code>
+Dummy callback to avoid calls on destruct.
+
+**Kind**: global function  
+**Returns**: <code>null</code> - - null  

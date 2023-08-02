@@ -138,7 +138,6 @@ testTimeout in 5500ms #0 at 1689877236288
   - [ ] do smth with `destroy` method
   - [ ] transfer to typescript... maybe...
   - [ ] check some scope executing
-  - [ ] mk 100% test coverage
 
 
 

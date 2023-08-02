@@ -6,6 +6,12 @@ function getTimestamp() {
   return (performance || Date).now();
 }
 
+/**
+ * Dummy callback to avoid calls on destruct.
+ * @return {null} - null
+ */
+const dummyCallback = () => null;
+
 
 /**
  * @module Intervaq
@@ -63,7 +69,11 @@ class Intervaq {
    * @return {Interval} - object of Interval
    */
   setInterval(fnToExecute, timeInterval) {
-    const interval = new Interval(fnToExecute, timeInterval);
+    const interval = new Interval(
+        fnToExecute,
+        timeInterval,
+        (this.status === StatusIntervaq.PAUSED) ? true : false
+    );
     this.intervals.push(interval);
     return interval;
   }
@@ -90,7 +100,11 @@ class Intervaq {
    * @return {Timeout} - object of Timeout
    */
   setTimeout(fnToExecute, timeOut) {
-    const timeout = new Timeout(fnToExecute, timeOut);
+    const timeout = new Timeout(
+        fnToExecute,
+        timeOut,
+        (this.status === StatusIntervaq.PAUSED) ? true : false
+    );
     this.timeouts.push(timeout);
     return timeout;
   }
@@ -180,6 +194,8 @@ const StatusInterval = {
   DISABLED: 2,
   /** execution is processing */
   EXECUTING: 3,
+  /** execution done */
+  DONE: 4,
 };
 
 /**
@@ -190,8 +206,9 @@ class Interval {
    * Constructor.
    * @param {callback} callback - function to execute
    * @param {number} timeInterval - time of execution in Ms
+   * @param {boolean} isPaused - is intervaq paused on setInterval call
    */
-  constructor(callback, timeInterval) {
+  constructor(callback, timeInterval, isPaused) {
     /**
      * timestamp of its prev execution iteration.
      * @type {number}
@@ -201,7 +218,7 @@ class Interval {
      * `callback` function to execute.
      * @type {function}
      */
-    this.callback = callback;
+    this._callback_ = callback;
     /**
      * Int time in Ms of its interval execution.
      * @type {number}
@@ -224,6 +241,10 @@ class Interval {
      * @type {(null|number)}
      */
     this.pausedAtTime = null;
+
+    if (isPaused) {
+      this.pauseExecuting( this.prevTime );
+    }
   }
 
   /**
@@ -246,7 +267,7 @@ class Interval {
    */
   execute() {
     this.status = StatusInterval.EXECUTING;
-    this.callback.call();
+    this._callback_.call();
     this.status = StatusInterval.IN_PROCESS;
   }
 
@@ -301,10 +322,10 @@ class Interval {
    * Desctuctor functionality.
    */
   destroy() {
+    this.status = StatusInterval.DONE;
     this.prevTime = null;
-    this.callback = () => null;
+    this._callback_ = dummyCallback;
     this.timeInterval = null;
-    this.status = null;
     this.pausedAtTime = null;
   }
 }
@@ -336,8 +357,9 @@ class Timeout {
    * Constructor
    * @param {callback} callback - Function to execute.
    * @param {number} timeOut - timestamp to check for execution.
+   * @param {boolean} isPaused - is intervaq paused on setInterval call.
    */
-  constructor(callback, timeOut) {
+  constructor(callback, timeOut, isPaused) {
     /**
      * null (initial) or timestamp of its prev execution iteration.
      * @type {(null|number)}
@@ -347,7 +369,7 @@ class Timeout {
      * `callback` function to execute.
      * @type {function}
      */
-    this.callback = callback;
+    this._callback_ = callback;
     /**
      * Int time in Ms of its timeout execution.
      * @type {number}
@@ -370,6 +392,10 @@ class Timeout {
      * @type {(null|number)}
      */
     this.pausedAtTime = null;
+
+    if (isPaused) {
+      this.pauseExecuting( this.prevTime );
+    }
   }
 
   /**
@@ -393,7 +419,7 @@ class Timeout {
    */
   execute() {
     this.status = StatusTimeout.EXECUTING;
-    this.callback.call();
+    this._callback_.call();
     this.status = StatusTimeout.DONE;
     return true;
   }
@@ -449,11 +475,11 @@ class Timeout {
    * Desctuctor functionality.
    */
   destroy() {
+    this.status = StatusTimeout.DONE;
     this.prevTime = null;
-    this.callback = () => null;
+    this._callback_ = dummyCallback;
     this.timeOut = null;
     this.executeAtTime = null;
-    this.status = null;
     this.pausedAtTime = null;
   }
 }
