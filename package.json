@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "prepare": "husky install",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint:check": "eslint ./src/*",
     "lint:fix": "eslint --fix ./src/*",
     "build:docs": "node node_modules/.bin/jsdoc2md --heading-depth 1 ./src/index.js > ./docs/README.md"
@@ -18,10 +18,14 @@
   "author": "kostix.dev",
   "license": "MIT",
   "devDependencies": {
+    "@babel/preset-env": "^7.22.9",
+    "babel-jest": "^29.6.1",
     "eslint": "^8.45.0",
     "eslint-config-google": "^0.14.0",
     "git-conventional-commits": "^2.6.5",
     "husky": "^8.0.3",
+    "jest": "^29.6.1",
+    "jest-environment-jsdom": "^29.6.2",
     "jsdoc-to-markdown": "^8.0.0"
   }
 }
