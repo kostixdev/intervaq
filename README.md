@@ -1,7 +1,24 @@
 # Intervaq
+
+
+
+[![License][license-image-url]][license-url]
+[![NPM version][npm-image-url]][npm-url]
+[![Downloads][npm-downloads-image-url]][npm-url]
+
+
+
+
 > Just another one solution for `intervals` \ `timeouts` via `requestAnimationFrame`.
 
 Working well in a project that based on [three.js][threejs-url] library.
+
+
+
+![Coverage lines](./badges/jest/badge-lines.svg)
+![Coverage functions](./badges/jest/badge-functions.svg)
+![Coverage branches](./badges/jest/badge-branches.svg)
+![Coverage statements](./badges/jest/badge-statements.svg)
 
 
 
@@ -143,3 +160,10 @@ testTimeout in 5500ms #0 at 1689877236288
 [gitflow-url]: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
 [docs-url]: docs/README.md
 [husky-url]: https://typicode.github.io/husky/
+
+[license-url]: ./LICENSE
+[license-image-url]: https://img.shields.io/npm/l/intervaq
+
+[npm-url]: https://www.npmjs.com/package/intervaq
+[npm-image-url]: https://img.shields.io/npm/v/intervaq
+[npm-downloads-image-url]: https://img.shields.io/npm/dm/intervaq
