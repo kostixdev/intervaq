@@ -1,5 +1,9 @@
 {
-  "extends": ["eslint:recommended", "google"],
+  "extends": [
+    "eslint:recommended",
+    "google",
+    "prettier"
+  ],
   "env": {
     "browser": true,
     "node": true,

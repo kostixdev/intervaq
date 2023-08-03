@@ -12,13 +12,11 @@ function getTimestamp() {
  */
 const dummyCallback = () => null;
 
-
 /**
  * @module Intervaq
  * @example
  * const intervaq = new Intervaq();
  */
-
 
 /**
  * Status of Intervaq
@@ -61,7 +59,6 @@ class Intervaq {
     this.pausedAt = null;
   }
 
-
   /**
    * setInterval functionality.
    * @param {callback} fnToExecute - function to execute
@@ -70,9 +67,9 @@ class Intervaq {
    */
   setInterval(fnToExecute, timeInterval) {
     const interval = new Interval(
-        fnToExecute,
-        timeInterval,
-        (this.status === StatusIntervaq.PAUSED) ? true : false
+      fnToExecute,
+      timeInterval,
+      this.status === StatusIntervaq.PAUSED ? true : false
     );
     this.intervals.push(interval);
     return interval;
@@ -101,9 +98,9 @@ class Intervaq {
    */
   setTimeout(fnToExecute, timeOut) {
     const timeout = new Timeout(
-        fnToExecute,
-        timeOut,
-        (this.status === StatusIntervaq.PAUSED) ? true : false
+      fnToExecute,
+      timeOut,
+      this.status === StatusIntervaq.PAUSED ? true : false
     );
     this.timeouts.push(timeout);
     return timeout;
@@ -133,9 +130,7 @@ class Intervaq {
       return;
     }
     // - intervals execute
-    this.intervals.forEach((interval) =>
-      interval.checkTimeToExecute(timestamp)
-    );
+    this.intervals.forEach(interval => interval.checkTimeToExecute(timestamp));
     // - timeouts execute
     this.timeouts.forEach((timeout, index) => {
       if (timeout.checkTimeToExecute(timestamp)) {
@@ -152,13 +147,9 @@ class Intervaq {
     this.status = StatusIntervaq.PAUSED;
     this.pausedAt = getTimestamp();
     // - intervals pause
-    this.intervals.forEach(
-        (interval) => interval.pauseExecuting(this.pausedAt)
-    );
+    this.intervals.forEach(interval => interval.pauseExecuting(this.pausedAt));
     // - timeouts pause
-    this.timeouts.forEach(
-        (timeout) => timeout.pauseExecuting(this.pausedAt)
-    );
+    this.timeouts.forEach(timeout => timeout.pauseExecuting(this.pausedAt));
   }
 
   /**
@@ -167,19 +158,14 @@ class Intervaq {
   continueProcessing() {
     const continueAt = getTimestamp();
     // - intervals run
-    this.intervals.forEach(
-        (interval) => interval.continueExecuting(continueAt)
-    );
+    this.intervals.forEach(interval => interval.continueExecuting(continueAt));
     // - timeouts run
-    this.timeouts.forEach(
-        (timeout) => timeout.continueExecuting(continueAt)
-    );
+    this.timeouts.forEach(timeout => timeout.continueExecuting(continueAt));
     // - continue after intervals/timeouts activate
     this.pausedAt = null;
     this.status = StatusIntervaq.IN_PROCESS;
   }
 }
-
 
 /**
  * Status of Interval
@@ -243,7 +229,7 @@ class Interval {
     this.pausedAtTime = null;
 
     if (isPaused) {
-      this.pauseExecuting( this.prevTime );
+      this.pauseExecuting(this.prevTime);
     }
   }
 
@@ -330,7 +316,6 @@ class Interval {
   }
 }
 
-
 /**
  * Status of Timeout
  * @enum {number}
@@ -347,7 +332,6 @@ const StatusTimeout = {
   /** execution is processing */
   EXECUTING: 4,
 };
-
 
 /**
  * Timeout item class
@@ -394,7 +378,7 @@ class Timeout {
     this.pausedAtTime = null;
 
     if (isPaused) {
-      this.pauseExecuting( this.prevTime );
+      this.pauseExecuting(this.prevTime);
     }
   }
 
@@ -484,10 +468,4 @@ class Timeout {
   }
 }
 
-
-export {
-  Intervaq,
-  Interval,
-  Timeout,
-  getTimestamp,
-};
+export {Intervaq, Interval, Timeout, getTimestamp};

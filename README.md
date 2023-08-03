@@ -18,7 +18,7 @@ Check documentation [here][docs-url]
 
 ## Some info to use:
   - `intervaq`:
-    - `.checkToExecute()` in `requestAnimationFrame` callback body;
+    - `.checkToExecute(timestamp)` in `requestAnimationFrame` callback body;
     - `.setInterval(callback, timeMs)` / `.clearInterval(interval)` as usual;
     - `.setTimeout(callback, timeMs)` / `.clearTimeout(timeout)` as usual;
     - `.pauseProcessing()` / `.continueProcessing()` when its necessary;
@@ -30,27 +30,23 @@ Check documentation [here][docs-url]
 
 ## Usage:
 
-sode sample:
+some sample:
 
 ```javascript
 
 import { Intervaq } from 'intervaq';
 
-
-
 // init intervaq object
 const intervaq = new Intervaq();
 
 // using intervaq via requestAnimationFrame
-function animate() {
-  requestAnimationFrame( animate );
-
-  // here
+function animate(timestamp) {
+  // process intervaq
   if (intervaq !== undefined)
-    intervaq.checkToExecute();
+    intervaq.checkToExecute(timestamp);
+
+  requestAnimationFrame( animate );
 }
-
-
 
 // to control visibility state
 document.addEventListener( 'visibilitychange', onVisibilityChange );
@@ -68,14 +64,12 @@ function onVisibilityChange ( event ) {
 }
 
 
-
 // intervaq.setInterval case:
 let testIntervalValue = 0;
 const testInterval = intervaq.setInterval( () => {
   console.log(`testInterval every 1000ms #${testIntervalValue} at ${new Date().getTime()} `);
   testValue++;
 }, 1000);
-
 
 
 // intervaq.setTimeout case:
@@ -85,7 +79,6 @@ const testTimeout = intervaq.setTimeout( () => {
   intervaq.clearInterval(testInterval);
   console.log(`testTimeout in 5500ms #${testTimeoutValue} at ${new Date().getTime()} `);
 }, 5500);
-
 
 
 // action
@@ -130,10 +123,8 @@ testTimeout in 5500ms #0 at 1689877236288
 ## TODO:
 
   - [ ] apply some pattern... maybe...
-  - [ ] mk some prettify
-  - [ ] mk some cleanup... maybe...
   - [ ] modify some `checkToExecute` functionality
-  - [ ] chck `clearInterval` on `executionInProcess`
+  - [ ] chck `clearInterval` \ `clearTimeout` on `executionInProcess`
   - [ ] try to keep pausing at its `Intervaq` class only
   - [ ] do smth with `destroy` method
   - [ ] transfer to typescript... maybe...
