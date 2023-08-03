@@ -2,7 +2,7 @@
   "extends": [
     "eslint:recommended",
     "google",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "env": {
     "browser": true,
@@ -10,7 +10,9 @@
     "es6": true
   },
   "rules": {
-    // Additional, per-project rules...
+    "prettier/prettier": "error",
+    "arrow-body-style": "off",
+    "prefer-arrow-callback": "off"
   },
   "parserOptions": {
     "sourceType": "module"
