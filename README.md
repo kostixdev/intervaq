@@ -1,7 +1,24 @@
 # Intervaq
+
+
+
+[![License][license-image-url]][license-url]
+[![NPM version][npm-image-url]][npm-url]
+[![Downloads][npm-downloads-image-url]][npm-url]
+
+
+
+
 > Just another one solution for `intervals` \ `timeouts` via `requestAnimationFrame`.
 
 Working well in a project that based on [three.js][threejs-url] library.
+
+
+
+![Coverage lines](./badges/jest/badge-lines.svg)
+![Coverage functions](./badges/jest/badge-functions.svg)
+![Coverage branches](./badges/jest/badge-branches.svg)
+![Coverage statements](./badges/jest/badge-statements.svg)
 
 
 
@@ -12,9 +29,13 @@ Working well in a project that based on [three.js][threejs-url] library.
 
 
 
+## Documentation:
+Check documentation [here][docs-url]
+
+
 ## Some info to use:
   - `intervaq`:
-    - `.checkToExecute()` in `requestAnimationFrame` callback body;
+    - `.checkToExecute(timestamp)` in `requestAnimationFrame` callback body;
     - `.setInterval(callback, timeMs)` / `.clearInterval(interval)` as usual;
     - `.setTimeout(callback, timeMs)` / `.clearTimeout(timeout)` as usual;
     - `.pauseProcessing()` / `.continueProcessing()` when its necessary;
@@ -26,27 +47,23 @@ Working well in a project that based on [three.js][threejs-url] library.
 
 ## Usage:
 
-sode sample:
+some sample:
 
 ```javascript
 
 import { Intervaq } from 'intervaq';
 
-
-
 // init intervaq object
 const intervaq = new Intervaq();
 
 // using intervaq via requestAnimationFrame
-function animate() {
-  requestAnimationFrame( animate );
-
-  // here
+function animate(timestamp) {
+  // process intervaq
   if (intervaq !== undefined)
-    intervaq.checkToExecute();
+    intervaq.checkToExecute(timestamp);
+
+  requestAnimationFrame( animate );
 }
-
-
 
 // to control visibility state
 document.addEventListener( 'visibilitychange', onVisibilityChange );
@@ -64,14 +81,12 @@ function onVisibilityChange ( event ) {
 }
 
 
-
 // intervaq.setInterval case:
 let testIntervalValue = 0;
 const testInterval = intervaq.setInterval( () => {
   console.log(`testInterval every 1000ms #${testIntervalValue} at ${new Date().getTime()} `);
   testValue++;
 }, 1000);
-
 
 
 // intervaq.setTimeout case:
@@ -81,7 +96,6 @@ const testTimeout = intervaq.setTimeout( () => {
   intervaq.clearInterval(testInterval);
   console.log(`testTimeout in 5500ms #${testTimeoutValue} at ${new Date().getTime()} `);
 }, 5500);
-
 
 
 // action
@@ -115,19 +129,23 @@ testTimeout in 5500ms #0 at 1689877236288
 ```
 
 
+# Dev:
+
+  - `npm install`
+  - configure your gitflow workspace like it is [here][gitflow-url]
+  - `npm run prepare` (check [husky][husky-url] documentation)
+
+
 
 ## TODO:
 
   - [ ] apply some pattern... maybe...
-  - [ ] mk some prettify
-  - [ ] mk some doc
-  - [ ] mk some lint
-  - [ ] mk some tests
-  - [ ] mk some cleanup... maybe...
   - [ ] modify some `checkToExecute` functionality
+  - [ ] chck `clearInterval` \ `clearTimeout` on `executionInProcess`
   - [ ] try to keep pausing at its `Intervaq` class only
   - [ ] do smth with `destroy` method
   - [ ] transfer to typescript... maybe...
+  - [ ] check some scope executing
 
 
 
@@ -139,3 +157,13 @@ testTimeout in 5500ms #0 at 1689877236288
 [kostix-url]: https://kostix.dev
 [threejs-url]: https://threejs.org
 [requestAnimationFrame-url]: https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+[gitflow-url]: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
+[docs-url]: docs/README.md
+[husky-url]: https://typicode.github.io/husky/
+
+[license-url]: ./LICENSE
+[license-image-url]: https://img.shields.io/npm/l/intervaq
+
+[npm-url]: https://www.npmjs.com/package/intervaq
+[npm-image-url]: https://img.shields.io/npm/v/intervaq
+[npm-downloads-image-url]: https://img.shields.io/npm/dm/intervaq
