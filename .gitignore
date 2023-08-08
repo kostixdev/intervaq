@@ -1,7 +1,12 @@
 .DS_Store
 
+.vscode
+.history
+
 node_modules
 
 package-lock.json
 
 coverage
+
+.readmeqBackups

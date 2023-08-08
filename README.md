@@ -13,12 +13,13 @@
 
 Working well in a project that based on [three.js][threejs-url] library.
 
-
-
-![Coverage lines](./badges/jest/badge-lines.svg)
-![Coverage functions](./badges/jest/badge-functions.svg)
-![Coverage branches](./badges/jest/badge-branches.svg)
-![Coverage statements](./badges/jest/badge-statements.svg)
+## Test coverage:
+<!--READMEQ:jestBadges-->
+![Coverage lines](https://img.shields.io/badge/Lines-100%25-brightgreen?logo=jest)
+![Coverage functions](https://img.shields.io/badge/Functions-100%25-brightgreen?logo=jest)
+![Coverage branches](https://img.shields.io/badge/Branches-98.11%25-brightgreen?logo=jest)
+![Coverage statements](https://img.shields.io/badge/Statements-100%25-brightgreen?logo=jest)
+<!--/READMEQ:jestBadges-->
 
 
 
@@ -165,5 +166,5 @@ testTimeout in 5500ms #0 at 1689877236288
 [license-image-url]: https://img.shields.io/npm/l/intervaq
 
 [npm-url]: https://www.npmjs.com/package/intervaq
-[npm-image-url]: https://img.shields.io/npm/v/intervaq
-[npm-downloads-image-url]: https://img.shields.io/npm/dm/intervaq
+[npm-image-url]: https://img.shields.io/npm/v/intervaq?logo=npm
+[npm-downloads-image-url]: https://img.shields.io/npm/dw/intervaq
