@@ -1,19 +1,21 @@
 {
   "name": "intervaq",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Just another one solution for intervals and timeouts via requestAnimationFrame",
+  "type": "module",
   "repository": "kostixdev/intervaq",
   "main": "src/index.js",
   "scripts": {
     "prepare": "husky install",
     "test": "jest && npm run test:badges",
-    "test:coverage": "npm test -- --coverage",
-    "test:badges": "jest-coverage-badges --input ./coverage/coverage-summary.json --output ./badges/jest",
+    "test:coverage": "jest --coverageReporters='json-summary'",
+    "test:badges": "node ./scripts/update-jest-badges.js",
     "lint:check": "eslint ./src/*",
     "lint:fix": "eslint --fix ./src/*",
     "pretty:fix": "npx prettier ./test/index.test.js ./src/index.js --write",
     "build:docs": "node node_modules/.bin/jsdoc2md --heading-depth 1 ./src/index.js > ./docs/README.md",
-    "license:check": "jsgl --local ."
+    "license:check": "jsgl --local .",
+    "build": "npm run license:check && npm run lint:fix && npm run pretty:fix && npm run build:docs && npm run test"
   },
   "files": [
     "src/index.js",
@@ -38,10 +40,10 @@
     "git-conventional-commits": "^2.6.5",
     "husky": "^8.0.3",
     "jest": "^29.6.1",
-    "jest-coverage-badges": "^1.1.2",
     "jest-environment-jsdom": "^29.6.2",
     "js-green-licenses": "^4.0.0",
     "jsdoc-to-markdown": "^8.0.0",
-    "prettier": "3.0.0"
+    "prettier": "3.0.0",
+    "readmeq": "^1.1.0"
   }
 }
