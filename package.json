@@ -14,7 +14,8 @@
     "lint:fix": "eslint --fix ./src/*",
     "pretty:fix": "npx prettier ./test/index.test.js ./src/index.js --write",
     "build:docs": "node node_modules/.bin/jsdoc2md --heading-depth 1 ./src/index.js > ./docs/README.md",
-    "license:check": "jsgl --local ."
+    "license:check": "jsgl --local .",
+    "build": "npm run license:check && npm run lint:fix && npm run pretty:fix && npm run build:docs && npm run test"
   },
   "files": [
     "src/index.js",
