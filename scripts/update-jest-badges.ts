@@ -4,15 +4,24 @@
 import {promises as fs} from 'fs';
 import {modifyReadmeqSingle} from 'readmeq';
 
-
 const readmePath = './README.md';
 const coverageSummaryPath = './coverage/coverage-summary.json';
+const reportKeys: string[] = ['lines', 'functions', 'branches', 'statements'];
 
+interface Report {
+  [key: string]: ReportSection;
+}
+type ReportSection = {
+  [key: string]: Branches;
+};
+interface Branches {
+  total: number;
+  covered: number;
+  skipped: number;
+  pct: number;
+}
 
-const reportKeys = ['lines', 'functions', 'branches', 'statements'];
-
-
-const getColor = coverage => {
+const getColor = (coverage: number) => {
   if (coverage < 80) {
     return 'red';
   }
@@ -22,7 +31,7 @@ const getColor = coverage => {
   return 'brightgreen';
 };
 
-const getBadgeUrl = (report, key) => {
+const getBadgeUrl = (report: Report, key: string): string => {
   if (!(report && report.total && report.total[key])) {
     throw new Error('malformed coverage report');
   }
@@ -36,26 +45,27 @@ const getBadgeUrl = (report, key) => {
   )}-${color}?logo=jest`;
 };
 
-const getNewBadges = report => {
-  const badges = [];
-  reportKeys.forEach((key, index) => {
+const getNewBadges = (report: Report): string[] => {
+  const badges: string[] = [];
+  reportKeys.forEach(key => {
     badges.push('![Coverage ' + key + '](' + getBadgeUrl(report, key) + ')');
   });
   return badges;
 };
 
-
-// execute
-(async () => {
-  try{
+const updateJestBadges = async (): Promise<void> => {
+  try {
     const fileData = await fs.readFile(coverageSummaryPath, 'utf8');
-    const report = JSON.parse(fileData);
-    const newBadges = getNewBadges(report).join('\n');
+    const report: Report = JSON.parse(fileData);
+    const newBadges: string = getNewBadges(report).join('\n');
     await modifyReadmeqSingle('jestBadges', newBadges, {
       n: true,
-      filePath: readmePath
+      filePath: readmePath,
     });
   } catch (error) {
     throw error;
   }
-})();
+};
+
+//do it
+updateJestBadges();

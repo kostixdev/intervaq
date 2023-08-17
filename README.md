@@ -4,6 +4,7 @@
 
 [![License][license-image-url]][license-url]
 [![NPM version][npm-image-url]][npm-url]
+[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
 [![Downloads][npm-downloads-image-url]][npm-url]
 
 
