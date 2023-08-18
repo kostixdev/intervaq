@@ -1,557 +1,882 @@
-# Modules
-
-<dl>
-<dt><a href="#module_Intervaq">Intervaq</a></dt>
-<dd></dd>
-</dl>
-
-# Functions
-
-<dl>
-<dt><a href="#getTimestamp">getTimestamp()</a> ⇒ <code>number</code></dt>
-<dd><p>Returns timestamp.</p>
-</dd>
-<dt><a href="#dummyCallback">dummyCallback()</a> ⇒ <code>null</code></dt>
-<dd><p>Dummy callback to avoid calls on destruct.</p>
-</dd>
-</dl>
-
-<a name="module_Intervaq"></a>
-
 # Intervaq
-**Example**  
-```js
+
+[![License][license-image-url]][license-url]
+[![NPM version][npm-image-url]][npm-url]
+[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
+[![Downloads][npm-downloads-image-url]][npm-url]
+
+> Just another one solution for `intervals` \ `timeouts` via `requestAnimationFrame`.
+
+Working well in a project that based on [three.js][threejs-url] library.
+
+## Test coverage:
+<!--READMEQ:jestBadges-->
+![Coverage lines](https://img.shields.io/badge/Lines-100%25-brightgreen?logo=jest)
+![Coverage functions](https://img.shields.io/badge/Functions-100%25-brightgreen?logo=jest)
+![Coverage branches](https://img.shields.io/badge/Branches-98.11%25-brightgreen?logo=jest)
+![Coverage statements](https://img.shields.io/badge/Statements-100%25-brightgreen?logo=jest)
+<!--/READMEQ:jestBadges-->
+
+## Why:
+  - to use `intervals` \ `timeouts` via [requestAnimationFrame][requestAnimationFrame-url];
+  - to avoid some time based glitches, violations;
+  - to control some time based actions.
+
+## Documentation:
+Check documentation [here][docs-url]
+
+## Some info to use:
+  - `intervaq`:
+    - `.checkToExecute(timestamp)` in `requestAnimationFrame` callback body;
+    - `.setInterval(callback, timeMs)` / `.clearInterval(interval)` as usual;
+    - `.setTimeout(callback, timeMs)` / `.clearTimeout(timeout)` as usual;
+    - `.pauseProcessing()` / `.continueProcessing()` when its necessary;
+  - `intervaq` . `intervals` / `timeouts`:
+    - `.pauseExecuting(currentTimeInt)` and `.continueExecuting(currentTimeInt)` manually;
+    - `.disable()` / `.enable()` / `.restart()` manually.
+
+## Usage:
+
+some sample:
+
+```javascript
+
+import { Intervaq } from 'intervaq';
+
+// init intervaq object
 const intervaq = new Intervaq();
+
+// using intervaq via requestAnimationFrame
+function animate(timestamp) {
+  // process intervaq
+  if (intervaq !== undefined)
+    intervaq.checkToExecute(timestamp);
+
+  requestAnimationFrame( animate );
+}
+
+// to control visibility state
+document.addEventListener( 'visibilitychange', onVisibilityChange );
+
+function onVisibilityChange ( event ) {
+  if (event.target.visibilityState === 'visible') {
+    console.log(`tab is active at ${new Date().getTime()} `);
+    // continue processing
+    intervaq.continueProcessing();
+  } else {
+    console.log(`tab is inactive at ${new Date().getTime()} `);
+    // pause processing
+    intervaq.pauseProcessing();
+  }
+}
+
+// intervaq.setInterval case:
+let testIntervalValue = 0;
+const testInterval = intervaq.setInterval( () => {
+  console.log(`testInterval every 1000ms #${testIntervalValue} at ${new Date().getTime()} `);
+  testValue++;
+}, 1000);
+
+// intervaq.setTimeout case:
+let testTimeoutValue = 0;
+const testTimeout = intervaq.setTimeout( () => {
+  // disable its testInterval
+  intervaq.clearInterval(testInterval);
+  console.log(`testTimeout in 5500ms #${testTimeoutValue} at ${new Date().getTime()} `);
+}, 5500);
+
+// action
+animate();
+
 ```
 
-* [Intervaq](#module_Intervaq)
-    * [~Intervaq](#module_Intervaq..Intervaq)
-        * [new Intervaq()](#new_module_Intervaq..Intervaq_new)
-        * [.intervals](#module_Intervaq..Intervaq+intervals) : <code>Array.&lt;Interval&gt;</code>
-        * [.timeouts](#module_Intervaq..Intervaq+timeouts) : <code>Array.&lt;Timeout&gt;</code>
-        * [.status](#module_Intervaq..Intervaq+status) : <code>StatusIntervaq</code>
-        * [.pausedAt](#module_Intervaq..Intervaq+pausedAt) : <code>null</code> \| <code>number</code>
-        * [.setInterval(fnToExecute, timeInterval)](#module_Intervaq..Intervaq+setInterval) ⇒ <code>Interval</code>
-        * [.clearInterval(interval)](#module_Intervaq..Intervaq+clearInterval) ⇒ <code>boolean</code>
-        * [.setTimeout(fnToExecute, timeOut)](#module_Intervaq..Intervaq+setTimeout) ⇒ <code>Timeout</code>
-        * [.clearTimeout(timeout)](#module_Intervaq..Intervaq+clearTimeout) ⇒ <code>boolean</code>
-        * [.checkToExecute(timestamp)](#module_Intervaq..Intervaq+checkToExecute)
-        * [.pauseProcessing()](#module_Intervaq..Intervaq+pauseProcessing)
-        * [.continueProcessing()](#module_Intervaq..Intervaq+continueProcessing)
-    * [~Interval](#module_Intervaq..Interval)
-        * [new Interval(callback, timeInterval, isPaused)](#new_module_Intervaq..Interval_new)
-        * [.prevTime](#module_Intervaq..Interval+prevTime) : <code>number</code>
-        * [._callback](#module_Intervaq..Interval+_callback) : <code>function</code>
-        * [.timeInterval](#module_Intervaq..Interval+timeInterval) : <code>number</code>
-        * [.executeAtTime](#module_Intervaq..Interval+executeAtTime) : <code>number</code>
-        * [.status](#module_Intervaq..Interval+status) : <code>StatusInterval</code>
-        * [.pausedAtTime](#module_Intervaq..Interval+pausedAtTime) : <code>null</code> \| <code>number</code>
-        * [.prevTime](#module_Intervaq..Interval+prevTime) : <code>number</code>
-        * [._callback](#module_Intervaq..Interval+_callback) : <code>Callback</code>
-        * [.timeInterval](#module_Intervaq..Interval+timeInterval) : <code>number</code>
-        * [.executeAtTime](#module_Intervaq..Interval+executeAtTime) : <code>number</code>
-        * [.status](#module_Intervaq..Interval+status) : <code>StatusInterval</code>
-        * [.pausedAtTime](#module_Intervaq..Interval+pausedAtTime) : <code>null</code> \| <code>number</code>
-        * [.checkTimeToExecute(timeToCheck)](#module_Intervaq..Interval+checkTimeToExecute)
-        * [.execute()](#module_Intervaq..Interval+execute)
-        * [.pauseExecuting(pausedAtTime)](#module_Intervaq..Interval+pauseExecuting)
-        * [.continueExecuting(continueAtTime)](#module_Intervaq..Interval+continueExecuting)
-        * [.disable()](#module_Intervaq..Interval+disable) ⇒ <code>Interval</code>
-        * [.enable()](#module_Intervaq..Interval+enable) ⇒ <code>Interval</code>
-        * [.restart()](#module_Intervaq..Interval+restart) ⇒ <code>Interval</code>
-        * [.destroy()](#module_Intervaq..Interval+destroy)
-    * [~Timeout](#module_Intervaq..Timeout)
-        * [new Timeout(callback, timeOut, isPaused)](#new_module_Intervaq..Timeout_new)
-        * [.prevTime](#module_Intervaq..Timeout+prevTime) : <code>null</code> \| <code>number</code>
-        * [._callback](#module_Intervaq..Timeout+_callback) : <code>Callback</code>
-        * [.timeOut](#module_Intervaq..Timeout+timeOut) : <code>null</code> \| <code>number</code>
-        * [.executeAtTime](#module_Intervaq..Timeout+executeAtTime) : <code>null</code> \| <code>number</code>
-        * [.status](#module_Intervaq..Timeout+status) : <code>StatusTimeout</code>
-        * [.pausedAtTime](#module_Intervaq..Timeout+pausedAtTime) : <code>null</code> \| <code>number</code>
-        * [.checkTimeToExecute(timeToCheck)](#module_Intervaq..Timeout+checkTimeToExecute) ⇒ <code>boolean</code>
-        * [.execute()](#module_Intervaq..Timeout+execute) ⇒ <code>boolean</code>
-        * [.pauseExecuting(pausedAtTime)](#module_Intervaq..Timeout+pauseExecuting)
-        * [.continueExecuting(continueAtTime)](#module_Intervaq..Timeout+continueExecuting)
-        * [.disable()](#module_Intervaq..Timeout+disable) ⇒ <code>Timeout</code>
-        * [.enable()](#module_Intervaq..Timeout+enable) ⇒ <code>Timeout</code>
-        * [.restart()](#module_Intervaq..Timeout+restart) ⇒ <code>Timeout</code>
-        * [.destroy()](#module_Intervaq..Timeout+destroy)
-    * [~StatusIntervaq](#module_Intervaq..StatusIntervaq) : <code>enum</code>
-    * [~StatusInterval](#module_Intervaq..StatusInterval) : <code>enum</code>
-    * [~StatusTimeout](#module_Intervaq..StatusTimeout) : <code>enum</code>
-
-<a name="module_Intervaq..Intervaq"></a>
-
-## Intervaq~Intervaq
-Main Intervaq class
-
-**Kind**: inner class of [<code>Intervaq</code>](#module_Intervaq)  
-
-* [~Intervaq](#module_Intervaq..Intervaq)
-    * [new Intervaq()](#new_module_Intervaq..Intervaq_new)
-    * [.intervals](#module_Intervaq..Intervaq+intervals) : <code>Array.&lt;Interval&gt;</code>
-    * [.timeouts](#module_Intervaq..Intervaq+timeouts) : <code>Array.&lt;Timeout&gt;</code>
-    * [.status](#module_Intervaq..Intervaq+status) : <code>StatusIntervaq</code>
-    * [.pausedAt](#module_Intervaq..Intervaq+pausedAt) : <code>null</code> \| <code>number</code>
-    * [.setInterval(fnToExecute, timeInterval)](#module_Intervaq..Intervaq+setInterval) ⇒ <code>Interval</code>
-    * [.clearInterval(interval)](#module_Intervaq..Intervaq+clearInterval) ⇒ <code>boolean</code>
-    * [.setTimeout(fnToExecute, timeOut)](#module_Intervaq..Intervaq+setTimeout) ⇒ <code>Timeout</code>
-    * [.clearTimeout(timeout)](#module_Intervaq..Intervaq+clearTimeout) ⇒ <code>boolean</code>
-    * [.checkToExecute(timestamp)](#module_Intervaq..Intervaq+checkToExecute)
-    * [.pauseProcessing()](#module_Intervaq..Intervaq+pauseProcessing)
-    * [.continueProcessing()](#module_Intervaq..Intervaq+continueProcessing)
-
-<a name="new_module_Intervaq..Intervaq_new"></a>
-
-### new Intervaq()
-Constructor
-
-<a name="module_Intervaq..Intervaq+intervals"></a>
-
-### intervaq.intervals : <code>Array.&lt;Interval&gt;</code>
-Array of Intervals
-
-**Kind**: instance property of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
-<a name="module_Intervaq..Intervaq+timeouts"></a>
-
-### intervaq.timeouts : <code>Array.&lt;Timeout&gt;</code>
-Array of Timeouts
-
-**Kind**: instance property of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
-<a name="module_Intervaq..Intervaq+status"></a>
-
-### intervaq.status : <code>StatusIntervaq</code>
-Status value
-
-**Kind**: instance property of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
-<a name="module_Intervaq..Intervaq+pausedAt"></a>
+output sample 0:
+```
+testInterval every 1000ms #0 at 1689861750168 
+testInterval every 1000ms #1 at 1689861751169 
+testInterval every 1000ms #2 at 1689861752184 
+testInterval every 1000ms #3 at 1689861753184 
+testInterval every 1000ms #4 at 1689861754201 
+testTimeout in 5500ms #0 at 1689861754667
+```
 
-### intervaq.pausedAt : <code>null</code> \| <code>number</code>
-null or timestamp when Intervaq is paused
+output sample 1 (on tabs switching):
+```
+testInterval every 1000ms #0 at 1689877224270 
+testInterval every 1000ms #1 at 1689877225287 
+tab is inactive at 1689877226100 
+tab is active at 1689877230127 
+testInterval every 1000ms #2 at 1689877230319 
+tab is inactive at 1689877231240 
+tab is active at 1689877234740 
+testInterval every 1000ms #3 at 1689877234820 
+testInterval every 1000ms #4 at 1689877235821 
+testTimeout in 5500ms #0 at 1689877236288
 
-**Kind**: instance property of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
-<a name="module_Intervaq..Intervaq+setInterval"></a>
+```
 
-### intervaq.setInterval(fnToExecute, timeInterval) ⇒ <code>Interval</code>
-setInterval functionality.
+# Dev:
 
-**Kind**: instance method of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
-**Returns**: <code>Interval</code> - - object of Interval  
+  - `npm install`
+  - configure your gitflow workspace like it is [here][gitflow-url]
+  - `npm run prepare` (check [husky][husky-url] documentation)
 
-| Param | Type | Description |
-| --- | --- | --- |
-| fnToExecute | <code>callback</code> | function to execute |
-| timeInterval | <code>number</code> | time of execution in Ms |
+# Documentation:
 
-<a name="module_Intervaq..Intervaq+clearInterval"></a>
+<!--READMEQ:docsSection-->
+### Enumerations
 
-### intervaq.clearInterval(interval) ⇒ <code>boolean</code>
-clearInterval functionality.
+- [StatusInterval](README.md#statusinterval)
+- [StatusIntervaq](README.md#statusintervaq)
+- [StatusTimeout](README.md#statustimeout)
 
-**Kind**: instance method of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
-**Returns**: <code>boolean</code> - - done state  
+### Classes
 
-| Param | Type | Description |
-| --- | --- | --- |
-| interval | <code>Interval</code> | object of Interval |
+- [Interval](README.md#interval)
+- [Intervaq](README.md#intervaq)
+- [Timeout](README.md#timeout)
 
-<a name="module_Intervaq..Intervaq+setTimeout"></a>
+### Type Aliases
 
-### intervaq.setTimeout(fnToExecute, timeOut) ⇒ <code>Timeout</code>
-setTimeout functionality.
+- [Callback](README.md#callback)
+- [Timestamp](README.md#timestamp)
 
-**Kind**: instance method of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
-**Returns**: <code>Timeout</code> - - object of Timeout  
+### Functions
 
-| Param | Type | Description |
-| --- | --- | --- |
-| fnToExecute | <code>callback</code> | function to execute |
-| timeOut | <code>number</code> | time of execution in Ms |
+- [dummyCallback](README.md#dummycallback)
+- [getTimestamp](README.md#gettimestamp)
 
-<a name="module_Intervaq..Intervaq+clearTimeout"></a>
+## Enumerations
 
-### intervaq.clearTimeout(timeout) ⇒ <code>boolean</code>
-clearTimeout functionality.
+### StatusInterval
 
-**Kind**: instance method of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
-**Returns**: <code>boolean</code> - - done state  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| timeout | <code>Timeout</code> | object of Timeout |
-
-<a name="module_Intervaq..Intervaq+checkToExecute"></a>
-
-### intervaq.checkToExecute(timestamp)
-Checking intervals and timeouts to execute
-
-**Kind**: instance method of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| timestamp | <code>number</code> | timestamp (from `requestAnimationFrame`, etc) |
-
-<a name="module_Intervaq..Intervaq+pauseProcessing"></a>
-
-### intervaq.pauseProcessing()
-Set intervals/timeouts paused to prevent its execution
-
-**Kind**: instance method of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
-<a name="module_Intervaq..Intervaq+continueProcessing"></a>
-
-### intervaq.continueProcessing()
-Continue of intervals/timeouts to execute after paused
-
-**Kind**: instance method of [<code>Intervaq</code>](#module_Intervaq..Intervaq)  
-<a name="module_Intervaq..Interval"></a>
-
-## Intervaq~Interval
-Interval item class
-
-**Kind**: inner class of [<code>Intervaq</code>](#module_Intervaq)  
-
-* [~Interval](#module_Intervaq..Interval)
-    * [new Interval(callback, timeInterval, isPaused)](#new_module_Intervaq..Interval_new)
-    * [.prevTime](#module_Intervaq..Interval+prevTime) : <code>number</code>
-    * [._callback](#module_Intervaq..Interval+_callback) : <code>function</code>
-    * [.timeInterval](#module_Intervaq..Interval+timeInterval) : <code>number</code>
-    * [.executeAtTime](#module_Intervaq..Interval+executeAtTime) : <code>number</code>
-    * [.status](#module_Intervaq..Interval+status) : <code>StatusInterval</code>
-    * [.pausedAtTime](#module_Intervaq..Interval+pausedAtTime) : <code>null</code> \| <code>number</code>
-    * [.prevTime](#module_Intervaq..Interval+prevTime) : <code>number</code>
-    * [._callback](#module_Intervaq..Interval+_callback) : <code>Callback</code>
-    * [.timeInterval](#module_Intervaq..Interval+timeInterval) : <code>number</code>
-    * [.executeAtTime](#module_Intervaq..Interval+executeAtTime) : <code>number</code>
-    * [.status](#module_Intervaq..Interval+status) : <code>StatusInterval</code>
-    * [.pausedAtTime](#module_Intervaq..Interval+pausedAtTime) : <code>null</code> \| <code>number</code>
-    * [.checkTimeToExecute(timeToCheck)](#module_Intervaq..Interval+checkTimeToExecute)
-    * [.execute()](#module_Intervaq..Interval+execute)
-    * [.pauseExecuting(pausedAtTime)](#module_Intervaq..Interval+pauseExecuting)
-    * [.continueExecuting(continueAtTime)](#module_Intervaq..Interval+continueExecuting)
-    * [.disable()](#module_Intervaq..Interval+disable) ⇒ <code>Interval</code>
-    * [.enable()](#module_Intervaq..Interval+enable) ⇒ <code>Interval</code>
-    * [.restart()](#module_Intervaq..Interval+restart) ⇒ <code>Interval</code>
-    * [.destroy()](#module_Intervaq..Interval+destroy)
-
-<a name="new_module_Intervaq..Interval_new"></a>
-
-### new Interval(callback, timeInterval, isPaused)
-Constructor.
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| callback | <code>callback</code> | function to execute |
-| timeInterval | <code>number</code> | time of execution in Ms |
-| isPaused | <code>boolean</code> | is intervaq paused on setInterval call |
-
-<a name="module_Intervaq..Interval+prevTime"></a>
-
-### interval.prevTime : <code>number</code>
-timestamp of its prev execution iteration.
-
-**Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+_callback"></a>
-
-### interval.\_callback : <code>function</code>
-`callback` function to execute.
-
-**Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+timeInterval"></a>
-
-### interval.timeInterval : <code>number</code>
-Int time in Ms of its interval execution.
-
-**Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+executeAtTime"></a>
-
-### interval.executeAtTime : <code>number</code>
-timestamp of next execution iteration.
-
-**Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+status"></a>
-
-### interval.status : <code>StatusInterval</code>
-Status value.
-
-**Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+pausedAtTime"></a>
-
-### interval.pausedAtTime : <code>null</code> \| <code>number</code>
-null or timestamp when current interval is paused.
-
-**Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+prevTime"></a>
-
-### interval.prevTime : <code>number</code>
-timestamp of its prev execution iteration.
-
-**Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+_callback"></a>
-
-### interval.\_callback : <code>Callback</code>
-`callback` function to execute.
-
-**Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+timeInterval"></a>
-
-### interval.timeInterval : <code>number</code>
-Int time in Ms of its interval execution.
-
-**Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+executeAtTime"></a>
-
-### interval.executeAtTime : <code>number</code>
-timestamp of next execution iteration.
-
-**Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+status"></a>
-
-### interval.status : <code>StatusInterval</code>
-Status value.
-
-**Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+pausedAtTime"></a>
-
-### interval.pausedAtTime : <code>null</code> \| <code>number</code>
-null or timestamp when current interval is paused.
-
-**Kind**: instance property of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+checkTimeToExecute"></a>
-
-### interval.checkTimeToExecute(timeToCheck)
-Check its Interval for execution.
-
-**Kind**: instance method of [<code>Interval</code>](#module_Intervaq..Interval)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| timeToCheck | <code>number</code> | timestamp to check for execution. |
-
-<a name="module_Intervaq..Interval+execute"></a>
-
-### interval.execute()
-Execute the `callback` function.
-
-**Kind**: instance method of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Interval+pauseExecuting"></a>
-
-### interval.pauseExecuting(pausedAtTime)
-Set execution on pause.
-
-**Kind**: instance method of [<code>Interval</code>](#module_Intervaq..Interval)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| pausedAtTime | <code>number</code> | timestamp to set its `pausedAtTime`. |
-
-<a name="module_Intervaq..Interval+continueExecuting"></a>
-
-### interval.continueExecuting(continueAtTime)
-Continue to execute after pause.
-
-**Kind**: instance method of [<code>Interval</code>](#module_Intervaq..Interval)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| continueAtTime | <code>number</code> | timestamp to calculate its downtime. |
-
-<a name="module_Intervaq..Interval+disable"></a>
-
-### interval.disable() ⇒ <code>Interval</code>
-Disable execution.
-
-**Kind**: instance method of [<code>Interval</code>](#module_Intervaq..Interval)  
-**Returns**: <code>Interval</code> - this.  
-<a name="module_Intervaq..Interval+enable"></a>
-
-### interval.enable() ⇒ <code>Interval</code>
-Enable execution.
-
-**Kind**: instance method of [<code>Interval</code>](#module_Intervaq..Interval)  
-**Returns**: <code>Interval</code> - this.  
-<a name="module_Intervaq..Interval+restart"></a>
-
-### interval.restart() ⇒ <code>Interval</code>
-Restart execution.
-
-**Kind**: instance method of [<code>Interval</code>](#module_Intervaq..Interval)  
-**Returns**: <code>Interval</code> - this.  
-<a name="module_Intervaq..Interval+destroy"></a>
-
-### interval.destroy()
-Desctuctor functionality.
-
-**Kind**: instance method of [<code>Interval</code>](#module_Intervaq..Interval)  
-<a name="module_Intervaq..Timeout"></a>
-
-## Intervaq~Timeout
-Timeout item class
-
-**Kind**: inner class of [<code>Intervaq</code>](#module_Intervaq)  
-
-* [~Timeout](#module_Intervaq..Timeout)
-    * [new Timeout(callback, timeOut, isPaused)](#new_module_Intervaq..Timeout_new)
-    * [.prevTime](#module_Intervaq..Timeout+prevTime) : <code>null</code> \| <code>number</code>
-    * [._callback](#module_Intervaq..Timeout+_callback) : <code>Callback</code>
-    * [.timeOut](#module_Intervaq..Timeout+timeOut) : <code>null</code> \| <code>number</code>
-    * [.executeAtTime](#module_Intervaq..Timeout+executeAtTime) : <code>null</code> \| <code>number</code>
-    * [.status](#module_Intervaq..Timeout+status) : <code>StatusTimeout</code>
-    * [.pausedAtTime](#module_Intervaq..Timeout+pausedAtTime) : <code>null</code> \| <code>number</code>
-    * [.checkTimeToExecute(timeToCheck)](#module_Intervaq..Timeout+checkTimeToExecute) ⇒ <code>boolean</code>
-    * [.execute()](#module_Intervaq..Timeout+execute) ⇒ <code>boolean</code>
-    * [.pauseExecuting(pausedAtTime)](#module_Intervaq..Timeout+pauseExecuting)
-    * [.continueExecuting(continueAtTime)](#module_Intervaq..Timeout+continueExecuting)
-    * [.disable()](#module_Intervaq..Timeout+disable) ⇒ <code>Timeout</code>
-    * [.enable()](#module_Intervaq..Timeout+enable) ⇒ <code>Timeout</code>
-    * [.restart()](#module_Intervaq..Timeout+restart) ⇒ <code>Timeout</code>
-    * [.destroy()](#module_Intervaq..Timeout+destroy)
-
-<a name="new_module_Intervaq..Timeout_new"></a>
-
-### new Timeout(callback, timeOut, isPaused)
-Constructor
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| callback | <code>callback</code> | Function to execute. |
-| timeOut | <code>number</code> | timestamp to check for execution. |
-| isPaused | <code>boolean</code> | is intervaq paused on setInterval call. |
-
-<a name="module_Intervaq..Timeout+prevTime"></a>
-
-### timeout.prevTime : <code>null</code> \| <code>number</code>
-null (initial) or timestamp of its prev execution iteration.
-
-**Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-<a name="module_Intervaq..Timeout+_callback"></a>
-
-### timeout.\_callback : <code>Callback</code>
-`callback` function to execute.
-
-**Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-<a name="module_Intervaq..Timeout+timeOut"></a>
-
-### timeout.timeOut : <code>null</code> \| <code>number</code>
-Int time in Ms of its timeout execution.
-
-**Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-<a name="module_Intervaq..Timeout+executeAtTime"></a>
-
-### timeout.executeAtTime : <code>null</code> \| <code>number</code>
-timestamp of next execution iteration.
-
-**Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-<a name="module_Intervaq..Timeout+status"></a>
-
-### timeout.status : <code>StatusTimeout</code>
-Status value.
-
-**Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-<a name="module_Intervaq..Timeout+pausedAtTime"></a>
-
-### timeout.pausedAtTime : <code>null</code> \| <code>number</code>
-null or timestamp when current interval is paused.
-
-**Kind**: instance property of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-<a name="module_Intervaq..Timeout+checkTimeToExecute"></a>
-
-### timeout.checkTimeToExecute(timeToCheck) ⇒ <code>boolean</code>
-Check its Timeout for execution.
-
-**Kind**: instance method of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-**Returns**: <code>boolean</code> - done state.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| timeToCheck | <code>number</code> | timestamp to check for the execution. |
-
-<a name="module_Intervaq..Timeout+execute"></a>
-
-### timeout.execute() ⇒ <code>boolean</code>
-Execute the `callback` function.
-
-**Kind**: instance method of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-**Returns**: <code>boolean</code> - done state.  
-<a name="module_Intervaq..Timeout+pauseExecuting"></a>
-
-### timeout.pauseExecuting(pausedAtTime)
-Set execution on pause.
-
-**Kind**: instance method of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| pausedAtTime | <code>number</code> | timestamp to set its `pausedAtTime`. |
-
-<a name="module_Intervaq..Timeout+continueExecuting"></a>
-
-### timeout.continueExecuting(continueAtTime)
-Continue to execute after pause.
-
-**Kind**: instance method of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| continueAtTime | <code>number</code> | timestamp to calculate its downtime. |
-
-<a name="module_Intervaq..Timeout+disable"></a>
-
-### timeout.disable() ⇒ <code>Timeout</code>
-Disable execution.
-
-**Kind**: instance method of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-**Returns**: <code>Timeout</code> - this.  
-<a name="module_Intervaq..Timeout+enable"></a>
-
-### timeout.enable() ⇒ <code>Timeout</code>
-Enable execution.
-
-**Kind**: instance method of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-**Returns**: <code>Timeout</code> - this.  
-<a name="module_Intervaq..Timeout+restart"></a>
-
-### timeout.restart() ⇒ <code>Timeout</code>
-Restart execution.
-
-**Kind**: instance method of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-**Returns**: <code>Timeout</code> - this.  
-<a name="module_Intervaq..Timeout+destroy"></a>
-
-### timeout.destroy()
-Desctuctor functionality.
-
-**Kind**: instance method of [<code>Timeout</code>](#module_Intervaq..Timeout)  
-<a name="module_Intervaq..StatusIntervaq"></a>
-
-## Intervaq~StatusIntervaq : <code>enum</code>
-Status of Intervaq
-
-**Kind**: inner enum of [<code>Intervaq</code>](#module_Intervaq)  
-<a name="module_Intervaq..StatusInterval"></a>
-
-## Intervaq~StatusInterval : <code>enum</code>
 Status of Interval
 
-**Kind**: inner enum of [<code>Intervaq</code>](#module_Intervaq)  
-<a name="module_Intervaq..StatusTimeout"></a>
+#### Enumeration Members
 
-## Intervaq~StatusTimeout : <code>enum</code>
+| Member | Value | Description |
+| :------ | :------ | :------ |
+| `DISABLED` | ``2`` | disabled for execution |
+| `DONE` | ``4`` | execution done |
+| `EXECUTING` | ``3`` | execution is processing |
+| `IN_PROCESS` | ``1`` | in process |
+| `PAUSED` | ``0`` | paused |
+
+***
+
+### StatusIntervaq
+
+Status of Intervaq
+
+#### Enumeration Members
+
+| Member | Value | Description |
+| :------ | :------ | :------ |
+| `IN_PROCESS` | ``1`` | in process |
+| `PAUSED` | ``0`` | paused |
+
+***
+
+### StatusTimeout
+
 Status of Timeout
 
-**Kind**: inner enum of [<code>Intervaq</code>](#module_Intervaq)  
-<a name="getTimestamp"></a>
+#### Enumeration Members
 
-# getTimestamp() ⇒ <code>number</code>
-Returns timestamp.
+| Member | Value | Description |
+| :------ | :------ | :------ |
+| `DISABLED` | ``3`` | disabled for execution |
+| `DONE` | ``2`` | execution done |
+| `EXECUTING` | ``4`` | execution is processing |
+| `IN_PROCESS` | ``1`` | in process |
+| `PAUSED` | ``0`` | paused |
 
-**Kind**: global function  
-**Returns**: <code>number</code> - - timestamp  
-<a name="dummyCallback"></a>
+## Classes
 
-# dummyCallback() ⇒ <code>null</code>
+### Interval
+
+Interval item class
+
+#### Constructors
+
+##### new Interval
+
+> **new Interval**(
+  `callback`,
+  `timeInterval`,
+  `isPaused`): [`Interval`](README.md#interval)
+
+Constructor.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `callback` | `Function` | function to execute |
+| `timeInterval` | `number` | time of execution in Ms |
+| `isPaused` | `boolean` | is intervaq paused on setInterval call |
+
+###### Returns
+
+[`Interval`](README.md#interval)
+
+###### Defined In
+
+[index.ts:249](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L249)
+
+#### Properties
+
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `_callback` | `Function` | `callback` function to execute. |
+| `executeAtTime` | `null` \| `number` | timestamp of next execution iteration. |
+| `pausedAtTime` | `null` \| `number` | null or timestamp when current interval is paused. |
+| `prevTime` | `null` \| `number` | timestamp of its prev execution iteration. |
+| `status` | [`StatusInterval`](README.md#statusinterval) | Status value. |
+| `timeInterval` | `null` \| `number` | Int time in Ms of its interval execution. |
+
+#### Methods
+
+##### checkTimeToExecute
+
+> **checkTimeToExecute**(`timeToCheck`): `void`
+
+Check its Interval for execution.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `timeToCheck` | `number` | timestamp to check for execution |
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:272](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L272)
+
+***
+
+##### continueExecuting
+
+> **continueExecuting**(`continueAtTime`): `void`
+
+Continue to execute after pause.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `continueAtTime` | `number` | timestamp to calculate its downtime |
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:312](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L312)
+
+***
+
+##### destroy
+
+> **destroy**(): `void`
+
+Desctuctor functionality.
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:354](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L354)
+
+***
+
+##### disable
+
+> **disable**(): [`Interval`](README.md#interval)
+
+Disable execution.
+
+###### Returns
+
+[`Interval`](README.md#interval)
+
+this
+
+###### Defined In
+
+[index.ts:324](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L324)
+
+***
+
+##### enable
+
+> **enable**(): [`Interval`](README.md#interval)
+
+Enable execution.
+
+###### Returns
+
+[`Interval`](README.md#interval)
+
+this
+
+###### Defined In
+
+[index.ts:333](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L333)
+
+***
+
+##### execute
+
+> **execute**(): `void`
+
+Execute the `callback` function.
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:291](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L291)
+
+***
+
+##### pauseExecuting
+
+> **pauseExecuting**(`pausedAtTime`): `void`
+
+Set execution on pause.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `pausedAtTime` | `number` | timestamp to set its `pausedAtTime` |
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:302](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L302)
+
+***
+
+##### restart
+
+> **restart**(): [`Interval`](README.md#interval)
+
+Restart execution.
+
+###### Returns
+
+[`Interval`](README.md#interval)
+
+this
+
+###### Defined In
+
+[index.ts:346](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L346)
+
+***
+
+### Intervaq
+
+Main Intervaq class
+
+#### Constructors
+
+##### new Intervaq
+
+> **new Intervaq**(): [`Intervaq`](README.md#intervaq)
+
+Constructor
+
+###### Returns
+
+[`Intervaq`](README.md#intervaq)
+
+###### Defined In
+
+[index.ts:69](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L69)
+
+#### Properties
+
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `intervals` | [`Interval`](README.md#interval)[] | Array of Intervals |
+| `pausedAt` | `null` \| `number` | null or timestamp when Intervaq is paused |
+| `status` | [`StatusIntervaq`](README.md#statusintervaq) | Status value |
+| `timeouts` | [`Timeout`](README.md#timeout)[] | Array of Timeouts |
+
+#### Methods
+
+##### checkToExecute
+
+> **checkToExecute**(`timestamp`): `void`
+
+Checking intervals and timeouts to execute.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `timestamp` | `number` | timestamp (from `requestAnimationFrame`, etc) |
+
+###### Returns
+
+`void`
+
+###### Defined In
+
+[index.ts:139](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L139)
+
+***
+
+##### clearInterval
+
+> **clearInterval**(`interval`): `boolean`
+
+clearInterval functionality.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `interval` | [`Interval`](README.md#interval) | object of Interval |
+
+###### Returns
+
+`boolean`
+
+- done state
+
+###### Defined In
+
+[index.ts:94](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L94)
+
+***
+
+##### clearTimeout
+
+> **clearTimeout**(`timeout`): `boolean`
+
+clearTimeout functionality.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `timeout` | [`Timeout`](README.md#timeout) | object of Timeout |
+
+###### Returns
+
+`boolean`
+
+- done state
+
+###### Defined In
+
+[index.ts:125](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L125)
+
+***
+
+##### continueProcessing
+
+> **continueProcessing**(): `void`
+
+Continue of intervals/timeouts to execute after paused
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:177](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L177)
+
+***
+
+##### pauseProcessing
+
+> **pauseProcessing**(): `void`
+
+Set intervals/timeouts paused to prevent its execution
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:160](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L160)
+
+***
+
+##### setInterval
+
+> **setInterval**(`fnToExecute`, `timeInterval`): [`Interval`](README.md#interval)
+
+setInterval functionality.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `fnToExecute` | `Function` | function to execute |
+| `timeInterval` | `number` | time of execution in Ms |
+
+###### Returns
+
+[`Interval`](README.md#interval)
+
+- object of Interval
+
+###### Defined In
+
+[index.ts:79](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L79)
+
+***
+
+##### setTimeout
+
+> **setTimeout**(`fnToExecute`, `timeOut`): [`Timeout`](README.md#timeout)
+
+setTimeout functionality.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `fnToExecute` | `Function` | function to execute |
+| `timeOut` | `number` | time of execution in Ms |
+
+###### Returns
+
+[`Timeout`](README.md#timeout)
+
+- object of Timeout
+
+###### Defined In
+
+[index.ts:110](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L110)
+
+***
+
+### Timeout
+
+Timeout item class
+
+#### Constructors
+
+##### new Timeout
+
+> **new Timeout**(
+  `callback`,
+  `timeOut`,
+  `isPaused`): [`Timeout`](README.md#timeout)
+
+Constructor
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `callback` | `Function` | Function to execute. |
+| `timeOut` | `number` | timestamp to check for execution. |
+| `isPaused` | `boolean` | is intervaq paused on setInterval call. |
+
+###### Returns
+
+[`Timeout`](README.md#timeout)
+
+###### Defined In
+
+[index.ts:423](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L423)
+
+#### Properties
+
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `_callback` | `Function` | `callback` function to execute. |
+| `executeAtTime` | `null` \| `number` | timestamp of next execution iteration. |
+| `pausedAtTime` | `null` \| `number` | null or timestamp when current interval is paused. |
+| `prevTime` | `null` \| `number` | null (initial) or timestamp of its prev execution iteration. |
+| `status` | [`StatusTimeout`](README.md#statustimeout) | Status value. |
+| `timeOut` | `null` \| `number` | Int time in Ms of its timeout execution. |
+
+#### Methods
+
+##### checkTimeToExecute
+
+> **checkTimeToExecute**(`timeToCheck`): `boolean`
+
+Check its Timeout for execution.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `timeToCheck` | `number` | timestamp to check for the execution |
+
+###### Returns
+
+`boolean`
+
+done state
+
+###### Defined In
+
+[index.ts:446](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L446)
+
+***
+
+##### continueExecuting
+
+> **continueExecuting**(`continueAtTime`): `void`
+
+Continue to execute after pause.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `continueAtTime` | `number` | timestamp to calculate its downtime |
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:483](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L483)
+
+***
+
+##### destroy
+
+> **destroy**(): `void`
+
+Desctuctor functionality.
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:525](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L525)
+
+***
+
+##### disable
+
+> **disable**(): [`Timeout`](README.md#timeout)
+
+Disable execution.
+
+###### Returns
+
+[`Timeout`](README.md#timeout)
+
+this
+
+###### Defined In
+
+[index.ts:495](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L495)
+
+***
+
+##### enable
+
+> **enable**(): [`Timeout`](README.md#timeout)
+
+Enable execution.
+
+###### Returns
+
+[`Timeout`](README.md#timeout)
+
+this
+
+###### Defined In
+
+[index.ts:504](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L504)
+
+***
+
+##### execute
+
+> **execute**(): `boolean`
+
+Execute the `callback` function.
+
+###### Returns
+
+`boolean`
+
+done state
+
+###### Defined In
+
+[index.ts:461](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L461)
+
+***
+
+##### pauseExecuting
+
+> **pauseExecuting**(`pausedAtTime`): `void`
+
+Set execution on pause.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `pausedAtTime` | `number` | timestamp to set its `pausedAtTime` |
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:473](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L473)
+
+***
+
+##### restart
+
+> **restart**(): [`Timeout`](README.md#timeout)
+
+Restart execution.
+
+###### Returns
+
+[`Timeout`](README.md#timeout)
+
+this
+
+###### Defined In
+
+[index.ts:517](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L517)
+
+## Type Aliases
+
+### Callback
+
+> **Callback**: `Function`
+
+`callback` type of function to execute.
+
+#### Defined In
+
+[index.ts:18](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L18)
+
+***
+
+### Timestamp
+
+> **Timestamp**: `number`
+
+Timestamp type of datetime.
+
+#### Defined In
+
+[index.ts:22](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L22)
+
+## Functions
+
+### dummyCallback
+
+> **dummyCallback**(): `null`
+
 Dummy callback to avoid calls on destruct.
 
-**Kind**: global function  
-**Returns**: <code>null</code> - - null  
+#### Returns
+
+`null`
+
+- null
+
+#### Defined In
+
+[index.ts:13](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L13)
+
+***
+
+### getTimestamp
+
+> **getTimestamp**(): `number`
+
+Returns timestamp.
+
+#### Returns
+
+`number`
+
+- timestamp
+
+#### Defined In
+
+[index.ts:5](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L5)
+<!--/READMEQ:docsSection-->
+
+## TODO:
+
+  - [ ] apply some pattern... maybe...
+  - [ ] modify some `checkToExecute` functionality
+  - [ ] chck `clearInterval` \ `clearTimeout` on `executionInProcess`
+  - [ ] try to keep pausing at its `Intervaq` class only
+  - [ ] do smth with `destroy` method
+  - [ ] check some scope executing
+  - [ ] do smtn good with docs
+
+---
+© [kostix.dev][kostix-url]
+
+[kostix-url]: https://kostix.dev
+[threejs-url]: https://threejs.org
+[requestAnimationFrame-url]: https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+[gitflow-url]: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
+[docs-url]: docs/README.md
+[husky-url]: https://typicode.github.io/husky/
+
+[license-url]: ./LICENSE
+[license-image-url]: https://img.shields.io/npm/l/intervaq
+
+[npm-url]: https://www.npmjs.com/package/intervaq
+[npm-image-url]: https://img.shields.io/npm/v/intervaq?logo=npm
+[npm-downloads-image-url]: https://img.shields.io/npm/dw/intervaq
+
+***
+Generated using [TypeDoc](https://typedoc.org/) and [typedoc-plugin-markdown](https://www.npmjs.com/package/typedoc-plugin-markdown)

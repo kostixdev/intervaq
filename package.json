@@ -13,7 +13,9 @@
     "lint:check": "eslint ./src/*",
     "lint:fix": "eslint --fix ./src/*",
     "pretty:fix": "npx prettier ./src/index.ts ./test/index.test.ts ./scripts/update-jest-badges.ts --write",
-    "build:docs": "npx jsdoc2md --heading-depth 1 ./build/src/index.js > ./docs/README.md",
+    "build:docs": "npm run build:typedocmd && npm run postbuild:typedocmd",
+    "build:typedocmd": "npx typedoc --plugin typedoc-plugin-markdown src/index.ts --outputFileStrategy modules --propertiesFormat table --enumMembersFormat table --typeDeclarationFormat table --hidePageHeader true",
+    "postbuild:typedocmd": "node ./build/scripts/postbuild-typedocmd.js",
     "license:check": "jsgl --local .",
     "build": "npm run license:check && npm run lint:fix && npm run pretty:fix && npm run build:docs && npm run test",
     "lint": "gts lint",
@@ -65,6 +67,8 @@
     "readmeq": "^1.3.0",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
+    "typedoc": "^0.24.8",
+    "typedoc-plugin-markdown": "^4.0.0-next.18",
     "typescript": "~4.7.0"
   }
 }

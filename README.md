@@ -138,6 +138,736 @@ testTimeout in 5500ms #0 at 1689877236288
   - `npm run prepare` (check [husky][husky-url] documentation)
 
 
+# Documentation:
+
+<!--READMEQ:docsSection-->
+### Enumerations
+
+- [StatusInterval](README.md#statusinterval)
+- [StatusIntervaq](README.md#statusintervaq)
+- [StatusTimeout](README.md#statustimeout)
+
+### Classes
+
+- [Interval](README.md#interval)
+- [Intervaq](README.md#intervaq)
+- [Timeout](README.md#timeout)
+
+### Type Aliases
+
+- [Callback](README.md#callback)
+- [Timestamp](README.md#timestamp)
+
+### Functions
+
+- [dummyCallback](README.md#dummycallback)
+- [getTimestamp](README.md#gettimestamp)
+
+## Enumerations
+
+### StatusInterval
+
+Status of Interval
+
+#### Enumeration Members
+
+| Member | Value | Description |
+| :------ | :------ | :------ |
+| `DISABLED` | ``2`` | disabled for execution |
+| `DONE` | ``4`` | execution done |
+| `EXECUTING` | ``3`` | execution is processing |
+| `IN_PROCESS` | ``1`` | in process |
+| `PAUSED` | ``0`` | paused |
+
+***
+
+### StatusIntervaq
+
+Status of Intervaq
+
+#### Enumeration Members
+
+| Member | Value | Description |
+| :------ | :------ | :------ |
+| `IN_PROCESS` | ``1`` | in process |
+| `PAUSED` | ``0`` | paused |
+
+***
+
+### StatusTimeout
+
+Status of Timeout
+
+#### Enumeration Members
+
+| Member | Value | Description |
+| :------ | :------ | :------ |
+| `DISABLED` | ``3`` | disabled for execution |
+| `DONE` | ``2`` | execution done |
+| `EXECUTING` | ``4`` | execution is processing |
+| `IN_PROCESS` | ``1`` | in process |
+| `PAUSED` | ``0`` | paused |
+
+## Classes
+
+### Interval
+
+Interval item class
+
+#### Constructors
+
+##### new Interval
+
+> **new Interval**(
+  `callback`,
+  `timeInterval`,
+  `isPaused`): [`Interval`](README.md#interval)
+
+Constructor.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `callback` | `Function` | function to execute |
+| `timeInterval` | `number` | time of execution in Ms |
+| `isPaused` | `boolean` | is intervaq paused on setInterval call |
+
+###### Returns
+
+[`Interval`](README.md#interval)
+
+###### Defined In
+
+[index.ts:249](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L249)
+
+#### Properties
+
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `_callback` | `Function` | `callback` function to execute. |
+| `executeAtTime` | `null` \| `number` | timestamp of next execution iteration. |
+| `pausedAtTime` | `null` \| `number` | null or timestamp when current interval is paused. |
+| `prevTime` | `null` \| `number` | timestamp of its prev execution iteration. |
+| `status` | [`StatusInterval`](README.md#statusinterval) | Status value. |
+| `timeInterval` | `null` \| `number` | Int time in Ms of its interval execution. |
+
+#### Methods
+
+##### checkTimeToExecute
+
+> **checkTimeToExecute**(`timeToCheck`): `void`
+
+Check its Interval for execution.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `timeToCheck` | `number` | timestamp to check for execution |
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:272](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L272)
+
+***
+
+##### continueExecuting
+
+> **continueExecuting**(`continueAtTime`): `void`
+
+Continue to execute after pause.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `continueAtTime` | `number` | timestamp to calculate its downtime |
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:312](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L312)
+
+***
+
+##### destroy
+
+> **destroy**(): `void`
+
+Desctuctor functionality.
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:354](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L354)
+
+***
+
+##### disable
+
+> **disable**(): [`Interval`](README.md#interval)
+
+Disable execution.
+
+###### Returns
+
+[`Interval`](README.md#interval)
+
+this
+
+###### Defined In
+
+[index.ts:324](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L324)
+
+***
+
+##### enable
+
+> **enable**(): [`Interval`](README.md#interval)
+
+Enable execution.
+
+###### Returns
+
+[`Interval`](README.md#interval)
+
+this
+
+###### Defined In
+
+[index.ts:333](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L333)
+
+***
+
+##### execute
+
+> **execute**(): `void`
+
+Execute the `callback` function.
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:291](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L291)
+
+***
+
+##### pauseExecuting
+
+> **pauseExecuting**(`pausedAtTime`): `void`
+
+Set execution on pause.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `pausedAtTime` | `number` | timestamp to set its `pausedAtTime` |
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:302](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L302)
+
+***
+
+##### restart
+
+> **restart**(): [`Interval`](README.md#interval)
+
+Restart execution.
+
+###### Returns
+
+[`Interval`](README.md#interval)
+
+this
+
+###### Defined In
+
+[index.ts:346](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L346)
+
+***
+
+### Intervaq
+
+Main Intervaq class
+
+#### Constructors
+
+##### new Intervaq
+
+> **new Intervaq**(): [`Intervaq`](README.md#intervaq)
+
+Constructor
+
+###### Returns
+
+[`Intervaq`](README.md#intervaq)
+
+###### Defined In
+
+[index.ts:69](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L69)
+
+#### Properties
+
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `intervals` | [`Interval`](README.md#interval)[] | Array of Intervals |
+| `pausedAt` | `null` \| `number` | null or timestamp when Intervaq is paused |
+| `status` | [`StatusIntervaq`](README.md#statusintervaq) | Status value |
+| `timeouts` | [`Timeout`](README.md#timeout)[] | Array of Timeouts |
+
+#### Methods
+
+##### checkToExecute
+
+> **checkToExecute**(`timestamp`): `void`
+
+Checking intervals and timeouts to execute.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `timestamp` | `number` | timestamp (from `requestAnimationFrame`, etc) |
+
+###### Returns
+
+`void`
+
+###### Defined In
+
+[index.ts:139](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L139)
+
+***
+
+##### clearInterval
+
+> **clearInterval**(`interval`): `boolean`
+
+clearInterval functionality.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `interval` | [`Interval`](README.md#interval) | object of Interval |
+
+###### Returns
+
+`boolean`
+
+- done state
+
+###### Defined In
+
+[index.ts:94](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L94)
+
+***
+
+##### clearTimeout
+
+> **clearTimeout**(`timeout`): `boolean`
+
+clearTimeout functionality.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `timeout` | [`Timeout`](README.md#timeout) | object of Timeout |
+
+###### Returns
+
+`boolean`
+
+- done state
+
+###### Defined In
+
+[index.ts:125](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L125)
+
+***
+
+##### continueProcessing
+
+> **continueProcessing**(): `void`
+
+Continue of intervals/timeouts to execute after paused
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:177](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L177)
+
+***
+
+##### pauseProcessing
+
+> **pauseProcessing**(): `void`
+
+Set intervals/timeouts paused to prevent its execution
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:160](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L160)
+
+***
+
+##### setInterval
+
+> **setInterval**(`fnToExecute`, `timeInterval`): [`Interval`](README.md#interval)
+
+setInterval functionality.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `fnToExecute` | `Function` | function to execute |
+| `timeInterval` | `number` | time of execution in Ms |
+
+###### Returns
+
+[`Interval`](README.md#interval)
+
+- object of Interval
+
+###### Defined In
+
+[index.ts:79](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L79)
+
+***
+
+##### setTimeout
+
+> **setTimeout**(`fnToExecute`, `timeOut`): [`Timeout`](README.md#timeout)
+
+setTimeout functionality.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `fnToExecute` | `Function` | function to execute |
+| `timeOut` | `number` | time of execution in Ms |
+
+###### Returns
+
+[`Timeout`](README.md#timeout)
+
+- object of Timeout
+
+###### Defined In
+
+[index.ts:110](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L110)
+
+***
+
+### Timeout
+
+Timeout item class
+
+#### Constructors
+
+##### new Timeout
+
+> **new Timeout**(
+  `callback`,
+  `timeOut`,
+  `isPaused`): [`Timeout`](README.md#timeout)
+
+Constructor
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `callback` | `Function` | Function to execute. |
+| `timeOut` | `number` | timestamp to check for execution. |
+| `isPaused` | `boolean` | is intervaq paused on setInterval call. |
+
+###### Returns
+
+[`Timeout`](README.md#timeout)
+
+###### Defined In
+
+[index.ts:423](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L423)
+
+#### Properties
+
+| Property | Type | Description |
+| :------ | :------ | :------ |
+| `_callback` | `Function` | `callback` function to execute. |
+| `executeAtTime` | `null` \| `number` | timestamp of next execution iteration. |
+| `pausedAtTime` | `null` \| `number` | null or timestamp when current interval is paused. |
+| `prevTime` | `null` \| `number` | null (initial) or timestamp of its prev execution iteration. |
+| `status` | [`StatusTimeout`](README.md#statustimeout) | Status value. |
+| `timeOut` | `null` \| `number` | Int time in Ms of its timeout execution. |
+
+#### Methods
+
+##### checkTimeToExecute
+
+> **checkTimeToExecute**(`timeToCheck`): `boolean`
+
+Check its Timeout for execution.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `timeToCheck` | `number` | timestamp to check for the execution |
+
+###### Returns
+
+`boolean`
+
+done state
+
+###### Defined In
+
+[index.ts:446](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L446)
+
+***
+
+##### continueExecuting
+
+> **continueExecuting**(`continueAtTime`): `void`
+
+Continue to execute after pause.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `continueAtTime` | `number` | timestamp to calculate its downtime |
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:483](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L483)
+
+***
+
+##### destroy
+
+> **destroy**(): `void`
+
+Desctuctor functionality.
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:525](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L525)
+
+***
+
+##### disable
+
+> **disable**(): [`Timeout`](README.md#timeout)
+
+Disable execution.
+
+###### Returns
+
+[`Timeout`](README.md#timeout)
+
+this
+
+###### Defined In
+
+[index.ts:495](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L495)
+
+***
+
+##### enable
+
+> **enable**(): [`Timeout`](README.md#timeout)
+
+Enable execution.
+
+###### Returns
+
+[`Timeout`](README.md#timeout)
+
+this
+
+###### Defined In
+
+[index.ts:504](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L504)
+
+***
+
+##### execute
+
+> **execute**(): `boolean`
+
+Execute the `callback` function.
+
+###### Returns
+
+`boolean`
+
+done state
+
+###### Defined In
+
+[index.ts:461](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L461)
+
+***
+
+##### pauseExecuting
+
+> **pauseExecuting**(`pausedAtTime`): `void`
+
+Set execution on pause.
+
+###### Parameters
+
+| Parameter | Type | Description |
+| :------ | :------ | :------ |
+| `pausedAtTime` | `number` | timestamp to set its `pausedAtTime` |
+
+###### Returns
+
+`void`
+
+void
+
+###### Defined In
+
+[index.ts:473](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L473)
+
+***
+
+##### restart
+
+> **restart**(): [`Timeout`](README.md#timeout)
+
+Restart execution.
+
+###### Returns
+
+[`Timeout`](README.md#timeout)
+
+this
+
+###### Defined In
+
+[index.ts:517](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L517)
+
+## Type Aliases
+
+### Callback
+
+> **Callback**: `Function`
+
+`callback` type of function to execute.
+
+#### Defined In
+
+[index.ts:18](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L18)
+
+***
+
+### Timestamp
+
+> **Timestamp**: `number`
+
+Timestamp type of datetime.
+
+#### Defined In
+
+[index.ts:22](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L22)
+
+## Functions
+
+### dummyCallback
+
+> **dummyCallback**(): `null`
+
+Dummy callback to avoid calls on destruct.
+
+#### Returns
+
+`null`
+
+- null
+
+#### Defined In
+
+[index.ts:13](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L13)
+
+***
+
+### getTimestamp
+
+> **getTimestamp**(): `number`
+
+Returns timestamp.
+
+#### Returns
+
+`number`
+
+- timestamp
+
+#### Defined In
+
+[index.ts:5](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L5)
+<!--/READMEQ:docsSection-->
+
 
 ## TODO:
 
@@ -146,8 +876,8 @@ testTimeout in 5500ms #0 at 1689877236288
   - [ ] chck `clearInterval` \ `clearTimeout` on `executionInProcess`
   - [ ] try to keep pausing at its `Intervaq` class only
   - [ ] do smth with `destroy` method
-  - [ ] transfer to typescript... maybe...
   - [ ] check some scope executing
+  - [ ] do smtn good with docs
 
 
 
