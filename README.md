@@ -240,7 +240,7 @@ Constructor.
 
 ###### Defined In
 
-[index.ts:249](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L249)
+[index.ts:249](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L249)
 
 #### Properties
 
@@ -275,7 +275,7 @@ void
 
 ###### Defined In
 
-[index.ts:272](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L272)
+[index.ts:272](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L272)
 
 ***
 
@@ -299,7 +299,7 @@ void
 
 ###### Defined In
 
-[index.ts:312](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L312)
+[index.ts:312](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L312)
 
 ***
 
@@ -317,7 +317,7 @@ void
 
 ###### Defined In
 
-[index.ts:354](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L354)
+[index.ts:354](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L354)
 
 ***
 
@@ -335,7 +335,7 @@ this
 
 ###### Defined In
 
-[index.ts:324](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L324)
+[index.ts:324](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L324)
 
 ***
 
@@ -353,7 +353,7 @@ this
 
 ###### Defined In
 
-[index.ts:333](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L333)
+[index.ts:333](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L333)
 
 ***
 
@@ -371,7 +371,7 @@ void
 
 ###### Defined In
 
-[index.ts:291](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L291)
+[index.ts:291](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L291)
 
 ***
 
@@ -395,7 +395,7 @@ void
 
 ###### Defined In
 
-[index.ts:302](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L302)
+[index.ts:302](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L302)
 
 ***
 
@@ -413,7 +413,7 @@ this
 
 ###### Defined In
 
-[index.ts:346](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L346)
+[index.ts:346](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L346)
 
 ***
 
@@ -435,7 +435,7 @@ Constructor
 
 ###### Defined In
 
-[index.ts:69](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L69)
+[index.ts:69](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L69)
 
 #### Properties
 
@@ -466,7 +466,7 @@ Checking intervals and timeouts to execute.
 
 ###### Defined In
 
-[index.ts:139](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L139)
+[index.ts:139](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L139)
 
 ***
 
@@ -490,7 +490,7 @@ clearInterval functionality.
 
 ###### Defined In
 
-[index.ts:94](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L94)
+[index.ts:94](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L94)
 
 ***
 
@@ -514,7 +514,7 @@ clearTimeout functionality.
 
 ###### Defined In
 
-[index.ts:125](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L125)
+[index.ts:125](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L125)
 
 ***
 
@@ -532,7 +532,7 @@ void
 
 ###### Defined In
 
-[index.ts:177](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L177)
+[index.ts:177](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L177)
 
 ***
 
@@ -550,7 +550,7 @@ void
 
 ###### Defined In
 
-[index.ts:160](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L160)
+[index.ts:160](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L160)
 
 ***
 
@@ -575,7 +575,7 @@ setInterval functionality.
 
 ###### Defined In
 
-[index.ts:79](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L79)
+[index.ts:79](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L79)
 
 ***
 
@@ -600,7 +600,7 @@ setTimeout functionality.
 
 ###### Defined In
 
-[index.ts:110](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L110)
+[index.ts:110](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L110)
 
 ***
 
@@ -633,7 +633,7 @@ Constructor
 
 ###### Defined In
 
-[index.ts:423](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L423)
+[index.ts:423](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L423)
 
 #### Properties
 
@@ -668,7 +668,7 @@ done state
 
 ###### Defined In
 
-[index.ts:446](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L446)
+[index.ts:446](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L446)
 
 ***
 
@@ -692,7 +692,7 @@ void
 
 ###### Defined In
 
-[index.ts:483](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L483)
+[index.ts:483](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L483)
 
 ***
 
@@ -710,7 +710,7 @@ void
 
 ###### Defined In
 
-[index.ts:525](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L525)
+[index.ts:525](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L525)
 
 ***
 
@@ -728,7 +728,7 @@ this
 
 ###### Defined In
 
-[index.ts:495](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L495)
+[index.ts:495](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L495)
 
 ***
 
@@ -746,7 +746,7 @@ this
 
 ###### Defined In
 
-[index.ts:504](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L504)
+[index.ts:504](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L504)
 
 ***
 
@@ -764,7 +764,7 @@ done state
 
 ###### Defined In
 
-[index.ts:461](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L461)
+[index.ts:461](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L461)
 
 ***
 
@@ -788,7 +788,7 @@ void
 
 ###### Defined In
 
-[index.ts:473](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L473)
+[index.ts:473](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L473)
 
 ***
 
@@ -806,7 +806,7 @@ this
 
 ###### Defined In
 
-[index.ts:517](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L517)
+[index.ts:517](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L517)
 
 ## Type Aliases
 
@@ -818,7 +818,7 @@ this
 
 #### Defined In
 
-[index.ts:18](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L18)
+[index.ts:18](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L18)
 
 ***
 
@@ -830,7 +830,7 @@ Timestamp type of datetime.
 
 #### Defined In
 
-[index.ts:22](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L22)
+[index.ts:22](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L22)
 
 ## Functions
 
@@ -848,7 +848,7 @@ Dummy callback to avoid calls on destruct.
 
 #### Defined In
 
-[index.ts:13](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L13)
+[index.ts:13](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L13)
 
 ***
 
@@ -866,7 +866,7 @@ Returns timestamp.
 
 #### Defined In
 
-[index.ts:5](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L5)
+[index.ts:5](https://github.com/kostixdev/intervaq/blob/4290a6e/src/index.ts#L5)
 <!--/READMEQ:docsSection-->
 
 

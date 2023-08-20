@@ -16,7 +16,7 @@
     "build:typedocmd": "npx typedoc --plugin typedoc-plugin-markdown src/index.ts --outputFileStrategy modules --propertiesFormat table --enumMembersFormat table --typeDeclarationFormat table --hidePageHeader true",
     "postbuild:typedocmd": "node ./build/scripts/postbuild-typedocmd.js",
     "license:check": "jsgl --local .",
-    "build": "npm run license:check && npm run lint:fix && npm run pretty:fix && npm run compile && npm run test && npm run build:docs",
+    "build": "npm run license:check && npm run lint:fix && npm run pretty:fix && npm run test && npm run build:docs",
     "lint": "gts lint",
     "clean": "gts clean",
     "compile": "tsc",
