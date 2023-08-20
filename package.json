@@ -1,6 +1,6 @@
 {
   "name": "intervaq",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Just another one solution for intervals and timeouts via requestAnimationFrame",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
