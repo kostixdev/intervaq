@@ -4,6 +4,7 @@
 npm run license:check
 npm run lint:fix
 npm run pretty:fix
-npm run build:docs
+npm run compile
 npm run test
+npm run build:docs
 git add .

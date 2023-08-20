@@ -9,10 +9,11 @@
 
 
 
-
 > Just another one solution for `intervals` \ `timeouts` via `requestAnimationFrame`.
 
 Working well in a project that based on [three.js][threejs-url] library.
+
+
 
 ## Test coverage:
 <!--READMEQ:jestBadges-->
@@ -31,10 +32,6 @@ Working well in a project that based on [three.js][threejs-url] library.
 
 
 
-## Documentation:
-Check documentation [here][docs-url]
-
-
 ## Some info to use:
   - `intervaq`:
     - `.checkToExecute(timestamp)` in `requestAnimationFrame` callback body;
@@ -49,29 +46,30 @@ Check documentation [here][docs-url]
 
 ## Usage:
 
-some sample:
+some sample (TypeScript):
 
-```javascript
-
-import { Intervaq } from 'intervaq';
+```typescript
+import {Intervaq, Timestamp} from 'intervaq';
 
 // init intervaq object
 const intervaq = new Intervaq();
 
 // using intervaq via requestAnimationFrame
-function animate(timestamp) {
+function animate(timestamp?: Timestamp) {
   // process intervaq
-  if (intervaq !== undefined)
+  if (timestamp && intervaq !== undefined) {
     intervaq.checkToExecute(timestamp);
+  }
 
-  requestAnimationFrame( animate );
+  requestAnimationFrame(animate);
 }
 
 // to control visibility state
-document.addEventListener( 'visibilitychange', onVisibilityChange );
+document.addEventListener('visibilitychange', onVisibilityChange);
 
-function onVisibilityChange ( event ) {
-  if (event.target.visibilityState === 'visible') {
+function onVisibilityChange(event: Event) {
+  const target = event.target as Document;
+  if (target.visibilityState === 'visible') {
     console.log(`tab is active at ${new Date().getTime()} `);
     // continue processing
     intervaq.continueProcessing();
@@ -82,27 +80,29 @@ function onVisibilityChange ( event ) {
   }
 }
 
-
 // intervaq.setInterval case:
 let testIntervalValue = 0;
-const testInterval = intervaq.setInterval( () => {
-  console.log(`testInterval every 1000ms #${testIntervalValue} at ${new Date().getTime()} `);
-  testValue++;
+const testInterval = intervaq.setInterval(() => {
+  console.log(
+    `testInterval every 1000ms #${testIntervalValue} at ${new Date().getTime()} `
+  );
+  testIntervalValue++;
 }, 1000);
 
-
 // intervaq.setTimeout case:
-let testTimeoutValue = 0;
-const testTimeout = intervaq.setTimeout( () => {
+const testTimeoutValue = 0;
+const testTimeout = intervaq.setTimeout(() => {
   // disable its testInterval
   intervaq.clearInterval(testInterval);
-  console.log(`testTimeout in 5500ms #${testTimeoutValue} at ${new Date().getTime()} `);
+  console.log(
+    `testTimeout in 5500ms #${testTimeoutValue} at ${new Date().getTime()} `
+  );
+  // !not important
+  intervaq.clearTimeout(testTimeout);
 }, 5500);
-
 
 // action
 animate();
-
 ```
 
 output sample 0:
@@ -136,6 +136,7 @@ testTimeout in 5500ms #0 at 1689877236288
   - `npm install`
   - configure your gitflow workspace like it is [here][gitflow-url]
   - `npm run prepare` (check [husky][husky-url] documentation)
+
 
 
 # Documentation:
@@ -239,7 +240,7 @@ Constructor.
 
 ###### Defined In
 
-[index.ts:249](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L249)
+[index.ts:249](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L249)
 
 #### Properties
 
@@ -274,7 +275,7 @@ void
 
 ###### Defined In
 
-[index.ts:272](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L272)
+[index.ts:272](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L272)
 
 ***
 
@@ -298,7 +299,7 @@ void
 
 ###### Defined In
 
-[index.ts:312](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L312)
+[index.ts:312](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L312)
 
 ***
 
@@ -316,7 +317,7 @@ void
 
 ###### Defined In
 
-[index.ts:354](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L354)
+[index.ts:354](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L354)
 
 ***
 
@@ -334,7 +335,7 @@ this
 
 ###### Defined In
 
-[index.ts:324](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L324)
+[index.ts:324](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L324)
 
 ***
 
@@ -352,7 +353,7 @@ this
 
 ###### Defined In
 
-[index.ts:333](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L333)
+[index.ts:333](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L333)
 
 ***
 
@@ -370,7 +371,7 @@ void
 
 ###### Defined In
 
-[index.ts:291](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L291)
+[index.ts:291](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L291)
 
 ***
 
@@ -394,7 +395,7 @@ void
 
 ###### Defined In
 
-[index.ts:302](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L302)
+[index.ts:302](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L302)
 
 ***
 
@@ -412,7 +413,7 @@ this
 
 ###### Defined In
 
-[index.ts:346](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L346)
+[index.ts:346](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L346)
 
 ***
 
@@ -434,7 +435,7 @@ Constructor
 
 ###### Defined In
 
-[index.ts:69](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L69)
+[index.ts:69](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L69)
 
 #### Properties
 
@@ -465,7 +466,7 @@ Checking intervals and timeouts to execute.
 
 ###### Defined In
 
-[index.ts:139](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L139)
+[index.ts:139](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L139)
 
 ***
 
@@ -489,7 +490,7 @@ clearInterval functionality.
 
 ###### Defined In
 
-[index.ts:94](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L94)
+[index.ts:94](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L94)
 
 ***
 
@@ -513,7 +514,7 @@ clearTimeout functionality.
 
 ###### Defined In
 
-[index.ts:125](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L125)
+[index.ts:125](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L125)
 
 ***
 
@@ -531,7 +532,7 @@ void
 
 ###### Defined In
 
-[index.ts:177](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L177)
+[index.ts:177](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L177)
 
 ***
 
@@ -549,7 +550,7 @@ void
 
 ###### Defined In
 
-[index.ts:160](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L160)
+[index.ts:160](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L160)
 
 ***
 
@@ -574,7 +575,7 @@ setInterval functionality.
 
 ###### Defined In
 
-[index.ts:79](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L79)
+[index.ts:79](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L79)
 
 ***
 
@@ -599,7 +600,7 @@ setTimeout functionality.
 
 ###### Defined In
 
-[index.ts:110](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L110)
+[index.ts:110](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L110)
 
 ***
 
@@ -632,7 +633,7 @@ Constructor
 
 ###### Defined In
 
-[index.ts:423](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L423)
+[index.ts:423](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L423)
 
 #### Properties
 
@@ -667,7 +668,7 @@ done state
 
 ###### Defined In
 
-[index.ts:446](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L446)
+[index.ts:446](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L446)
 
 ***
 
@@ -691,7 +692,7 @@ void
 
 ###### Defined In
 
-[index.ts:483](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L483)
+[index.ts:483](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L483)
 
 ***
 
@@ -709,7 +710,7 @@ void
 
 ###### Defined In
 
-[index.ts:525](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L525)
+[index.ts:525](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L525)
 
 ***
 
@@ -727,7 +728,7 @@ this
 
 ###### Defined In
 
-[index.ts:495](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L495)
+[index.ts:495](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L495)
 
 ***
 
@@ -745,7 +746,7 @@ this
 
 ###### Defined In
 
-[index.ts:504](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L504)
+[index.ts:504](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L504)
 
 ***
 
@@ -763,7 +764,7 @@ done state
 
 ###### Defined In
 
-[index.ts:461](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L461)
+[index.ts:461](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L461)
 
 ***
 
@@ -787,7 +788,7 @@ void
 
 ###### Defined In
 
-[index.ts:473](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L473)
+[index.ts:473](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L473)
 
 ***
 
@@ -805,7 +806,7 @@ this
 
 ###### Defined In
 
-[index.ts:517](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L517)
+[index.ts:517](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L517)
 
 ## Type Aliases
 
@@ -817,7 +818,7 @@ this
 
 #### Defined In
 
-[index.ts:18](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L18)
+[index.ts:18](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L18)
 
 ***
 
@@ -829,7 +830,7 @@ Timestamp type of datetime.
 
 #### Defined In
 
-[index.ts:22](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L22)
+[index.ts:22](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L22)
 
 ## Functions
 
@@ -847,7 +848,7 @@ Dummy callback to avoid calls on destruct.
 
 #### Defined In
 
-[index.ts:13](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L13)
+[index.ts:13](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L13)
 
 ***
 
@@ -865,8 +866,9 @@ Returns timestamp.
 
 #### Defined In
 
-[index.ts:5](https://github.com/kostixdev/intervaq/blob/3fc9d28/src/index.ts#L5)
+[index.ts:5](https://github.com/kostixdev/intervaq/blob/a70f55f/src/index.ts#L5)
 <!--/READMEQ:docsSection-->
+
 
 
 ## TODO:

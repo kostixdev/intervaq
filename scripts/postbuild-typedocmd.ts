@@ -1,8 +1,6 @@
 import {promises as fs} from 'fs';
 import {modifyReadmeqSingle} from 'readmeq';
 
-// const splitPattern = 'Table of contents\n\n';
-
 // get from build:typedocmd outputs
 const postbuildTypedocmd = async () => {
   try {
@@ -14,7 +12,7 @@ const postbuildTypedocmd = async () => {
     const matches: string[] = fileData.split(splitRegexp);
 
     if (matches && matches[1]) {
-      // fix links
+      // fix some links
       const docData = matches[1].replaceAll('](API.md#', '](README.md#');
       // add to main README.md
       modifyReadmeqSingle('docsSection', docData, {

@@ -16,7 +16,7 @@ type ResultInterval = {
   intervalCount: number;
 };
 // type ResultIntervalCallback = (
-//   error: any,
+//   error: Error,
 //   data: ResultInterval
 // ) => void;
 
@@ -25,7 +25,7 @@ type ResultTimeout = {
   timeEnd: Timestamp;
 };
 // type ResultTimeoutCallback = (
-//   error: any,
+//   error: Error,
 //   data: ResultTimeout
 // ) => void;
 
@@ -85,7 +85,7 @@ const timeoutCase: {[key: string]: Timeout} = {};
 /**
  * Timeout callback function.
  * @callback timeoutTimeCaseCallback
- * @param {any} error - null
+ * @param {null|Error} error - null
  * @param {timeoutTimeCaseCallbackData} data - callbacks timing data
  */
 
@@ -124,7 +124,7 @@ const intervalCount: {[key: string]: number} = {};
 /**
  * Interval callback function.
  * @callback intervalTimeCaseCallback
- * @param {any} error - null
+ * @param {null|Error} error - null
  * @param {intervalTimeCaseCallbackData} data - callbacks timing data
  */
 
