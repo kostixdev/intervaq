@@ -511,7 +511,7 @@ describe('basic setInterval functionality', () => {
   });
 
   // - OK
-  test('setInterval every 50ms and clearInterval in 290ms', done => {
+  test('setInterval every 50ms and clearInterval in 300ms', done => {
     let intervalCount = 0;
     const intervalTimes: number[] = [];
     const callback50 = (error: Error, data: ResultInterval) => {
@@ -537,17 +537,17 @@ describe('basic setInterval functionality', () => {
         done(error);
       }
     };
-    const callback290 = (error: Error, data: ResultTimeout) => {
+    const callback300 = (error: Error, data: ResultTimeout) => {
       if (error) {
         done(error);
         return;
       }
       try {
-        intervaq.clearInterval(intervalCase.setInterval50Ms5ToClearIn290ms);
+        intervaq.clearInterval(intervalCase.setInterval50Ms5ToClearIn300ms);
         const timeExecutionDiff = data.timeEnd - data.timeStart;
-        const timeExpectedDiff = 290 + timestampMissmatch;
+        const timeExpectedDiff = 300 + timestampMissmatch;
         const timeDiff = timestampDiff(timeExecutionDiff, timeExpectedDiff);
-        expect(timeExecutionDiff).toBeGreaterThanOrEqual(290);
+        expect(timeExecutionDiff).toBeGreaterThanOrEqual(300);
         expect(timeDiff).toBeLessThanOrEqual(
           timestampMissmatch + timestampInaccuracy
         );
@@ -576,8 +576,8 @@ describe('basic setInterval functionality', () => {
         done(error);
       }
     };
-    setIntervalTimeCase('setInterval50Ms5ToClearIn290ms', callback50, 50);
-    setTimeoutTimeCase('setTimeout290ForClearInterval50Ms5', callback290, 290);
+    setIntervalTimeCase('setInterval50Ms5ToClearIn300ms', callback50, 50);
+    setTimeoutTimeCase('setTimeout300ForClearInterval50Ms5', callback300, 300);
     setTimeoutTimeCase(
       'setTimeout350ForCheckClearInterval50Ms5',
       callback350,
