@@ -7,7 +7,7 @@
   "scripts": {
     "prepare": "husky install && npm run compile",
     "dev": "npm run clean && tsc --watch",
-    "test": "jest && npm run test:badges",
+    "test": "jest --coverage --coverageReporters='json-summary' && npm run test:badges",
     "test:badges": "node ./build/scripts/update-jest-badges.js",
     "lint:check": "eslint ./src/*",
     "lint:fix": "eslint --fix ./src/*",
