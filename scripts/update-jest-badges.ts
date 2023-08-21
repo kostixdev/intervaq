@@ -2,10 +2,15 @@
  * Smtn tkn from https://github.com/pamepeixinho/jest-coverage-badges
  */
 import {promises as fs} from 'fs';
+import * as path from 'path';
 import {modifyReadmeqSingle} from 'readmeq';
 
-const readmePath = './README.md';
-const coverageSummaryPath = './coverage/coverage-summary.json';
+const basePath: string = process.cwd();
+const readmePath: string = path.join(basePath, 'README.md');
+const coverageSummaryPath: string = path.join(
+  basePath,
+  'coverage/coverage-summary.json'
+);
 const reportKeys: string[] = ['lines', 'functions', 'branches', 'statements'];
 
 interface Report {
